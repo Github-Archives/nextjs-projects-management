@@ -1,8 +1,10 @@
-"use client"
+"use client";
 const Member = () => {
   return (
-    <div><h1>Member Client Session</h1></div>
-  )
-}
+    <div>
+      <h1>Member Client Session</h1>
+    </div>
+  );
+};
 
-export default Member
+export default Member;
