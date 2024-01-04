@@ -12,7 +12,7 @@ const Member = async () => {
       <h1>Member Server Session</h1>
       <h2>
         Demonstration of getting authentication to work on server-side (more
-        preferable)
+        preferable than client-side)
       </h2>
       <p>{session?.user?.email}</p>
       <p>{session?.user?.role}</p>

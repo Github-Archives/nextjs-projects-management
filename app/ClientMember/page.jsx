@@ -15,7 +15,7 @@ const Member = async () => {
       <h1>Member Client Session</h1>
       <h2>
         Demonstration of getting authentication to work on client-side (less
-        preferable)
+        preferable than server-side)
       </h2>
       <p>{session?.user?.email}</p>
       <p>{session?.user?.role}</p>
