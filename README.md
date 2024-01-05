@@ -17,5 +17,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [x] OAuth Provider setup for Github and Google
 - [x] Role-based authentication setup for both server rendered pages and client rendered pages
 - [x] Admin Role-based authentication
-- [ ]
+- [ ] Connect to database
 - [ ] Validate emails (right now it's more like a username because it can be anything)
