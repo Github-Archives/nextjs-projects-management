@@ -1,4 +1,4 @@
-// ! Original Code
+// Original code
 const CreateUser = () => {
   return (
     <div>
@@ -9,7 +9,7 @@ const CreateUser = () => {
 
 export default CreateUser;
 
-// ! Code inspired by original NextJS Project Management code
+// ! Code inspired by my original NextJS Project Management project
 // ! Working, But....
 // We are now making this a "use client"/client side component & no longer a server component.. which adds performance benefits & is the whole reason I went this path using /app routing server-side
 // Server Components allow developers to better leverage server infrastructure. For example, large dependencies that previously would impact the JavaScript bundle size on the client can instead remain entirely on the server, leading to improved performance. They make writing a React application feel similar to PHP or Ruby on Rails, but with the power and flexibility of React for templating UI.
@@ -18,11 +18,10 @@ export default CreateUser;
 
 // ! Remember the only reason we went with "use client" is because we wanted to take advantage of the { useEffect, useState } hooks. With server-side rendering we cannot use hooks!
 
-// Wait!
-// We are still getting this Warning Error:
+// ! We are still getting this Warning Error:
 // Warning: Hooks are not supported inside an async component. This error is often caused by accidentally adding `'use client'` to a module that was originally written for the server.
 
-// ? You can read more here: https://stackoverflow.com/questions/74965849/youre-importing-a-component-that-needs-usestate-it-only-works-in-a-client-comp
+// ? Read more here about it here: https://stackoverflow.com/questions/74965849/youre-importing-a-component-that-needs-usestate-it-only-works-in-a-client-comp
 
 // "use client";
 

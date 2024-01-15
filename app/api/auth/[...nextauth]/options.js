@@ -7,7 +7,7 @@ export const options = {
       profile(profile) {
         console.log("Profile GitHub: ", profile);
 
-        let userRole = "GitHub User"; // role for everybody but me
+        let userRole = "GitHub User"; // Role for everybody but me
         if (profile?.email == "drewreynerwilliams@gmail.com") {
           userRole = "admin";
         }
@@ -24,7 +24,7 @@ export const options = {
       profile(profile) {
         console.log("Profile Google: ", profile);
 
-        let userRole = "Google User"; // role for everybody but me
+        let userRole = "Google User"; // Role for everybody but me
         return {
           ...profile,
           id: profile.sub,
@@ -36,14 +36,14 @@ export const options = {
     }),
   ],
   callbacks: {
-    // adds our role to the token so we can use it in the program
+    // Adds our role to the token so we can use it in the app
     async jwt({ token, user }) {
-      // server-side
+      // Server-side
       if (user) token.role = user.role;
       return token;
     },
     async session({ session, token }) {
-      // client-side
+      // Client-side
       if (session?.user) session.user.role = token.role;
       return session;
     },
