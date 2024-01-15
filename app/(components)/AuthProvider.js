@@ -1,5 +1,5 @@
 // This file is only needed if we want to do authentication on the Client-side
-//    we already have authentication working Server-side, which is prefered
+//    we already have authentication working Server-side, which is prefered for what I'm aiming for
 "use client";
 
 import { SessionProvider } from "next-auth/react";
