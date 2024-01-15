@@ -12,4 +12,4 @@ async function getData() {
   }
 }
 
-export default getData; // Export the function directly
+export default getData;
