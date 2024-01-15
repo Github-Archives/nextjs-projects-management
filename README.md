@@ -10,12 +10,14 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## https://www.youtube.com/watch?v=MNm1XhDjX1s
 
 ## Todo
 
 - [x] OAuth Provider setup for Github and Google
 - [x] Role-based authentication setup for both server rendered pages and client rendered pages
 - [x] Admin Role-based authentication
-- [ ] Connect to database
+- [x] Connect to database
 - [ ] Validate emails (right now it's more like a username because it can be anything)
