@@ -20,7 +20,12 @@ yarn dev
 - [x] Role-based authentication setup for both server rendered pages and client rendered pages
 - [x] Admin Role-based authentication
 - [x] Connect to database
-- [ ] Validate emails (right now it's more like a username because it can be anything)
+- [ ] Shadcn UI
+- [ ] Create card component for tasks
+- [ ] Implement Drag-and-Drop for tasks (dnd-kit)
+- [ ] Global State Management (Redux, React Context, Zustand?)
+- [ ] GraphQL (PostGraphile?)
+- [ ] Validate emails (if we go outside of OAuth)
 
 ## Notes
 
