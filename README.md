@@ -32,3 +32,5 @@ yarn dev
 - At the moment `app/CreateUser/page.jsx` is accessible to Admins only when logging in through Github, not Google login. See temp comments in `app/CreateUser/page.jsx` for more details
 - Database still in POC mode. Simply displaying first row of database at the moment
 - Database access is in Client Member and behind an OAuth login. So if you want to access the database, you need to login first. But consider where you want this database to be accessed from & what you want to set/get from it
+
+- Test
