@@ -20,7 +20,7 @@ yarn dev
 - [x] Role-based authentication setup for both server rendered pages and client rendered pages
 - [x] Admin Role-based authentication
 - [x] Connect to database
-- [ ] Fix OAuth after deployment issue
+- [ ] Fix OAuth after deployment issue (look into using [Clerk](https://clerk.com/))
 - [ ] Shadcn UI
 - [ ] Create card component for tasks
 - [ ] Implement Drag-and-Drop for tasks (dnd-kit)
