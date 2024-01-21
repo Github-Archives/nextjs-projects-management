@@ -1,4 +1,5 @@
-"use client";
+// Gets first row from Neon database
+"use client"; // Without this it's server rendered by default & cannot use Hooks
 import React, { useEffect, useState } from "react";
 import getData from "../utils/database";
 
