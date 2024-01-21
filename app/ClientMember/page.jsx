@@ -21,9 +21,9 @@ const Member = () => {
   return (
     <div>
       <h2>First Row of Database:</h2>
-      <p>{rowResponse.id}</p>
-      <p>{rowResponse.name}</p>
-      <p>{rowResponse.value}</p>
+      <p>{`id: ${rowResponse.id}`}</p>
+      <p>{`Name: ${rowResponse.name}`}</p>
+      <p>{`Value: ${rowResponse.value}`}</p>
     </div>
   );
 };
