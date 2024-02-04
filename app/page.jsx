@@ -12,23 +12,24 @@ import {
 const Home = () => {
   return (
     <div>
-      {/* ! temp */}
-      <Button>Click me</Button>
+      {/* ! temp location */}
       <Card>
         <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
+          <CardTitle>CARD TITLE</CardTitle>
+          <CardDescription>
+            CARD DESCRIPTION: All individual card editing options (including
+            deleting this card) are all accessible via inside this card.
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
+        <CardContent className="truncate">
+          <p>CARD CONTENT:</p>https://ui.shadcn.com/docs/components/card#usage
         </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
+        <CardFooter>CARD FOOTER</CardFooter>
       </Card>
       {/* ! temp */}
       <h1>Home</h1>
       {/* Clerk Manage Account button */}
+      {/* TODO: Move <UserButton/> to <Navbar/> */}
       <UserButton afterSignOutUrl="/" />
     </div>
   );

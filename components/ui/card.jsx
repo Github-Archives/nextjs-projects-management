@@ -5,8 +5,9 @@ import { cn } from "@/lib/utils";
 const Card = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    // w-[250px] added to decrease card width
     className={cn(
-      "rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
+      "w-[250px] rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
       className,
     )}
     {...props}
