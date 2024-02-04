@@ -12,6 +12,7 @@ import {
 const Home = () => {
   return (
     <div>
+      <p className="text-4xl">Welcome Page</p>
       {/* ! temp location */}
       <Card>
         <CardHeader>
