@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-{
-  /* TODO: Fix temporary logged in status */
-}
+
 import CheckIfLoggedIn from "../utils/authUtils/returnUserStatus";
 
 const Nav = () => {
