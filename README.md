@@ -4,8 +4,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 ## Go to [http://localhost:3000](http://localhost:3000)
@@ -19,8 +17,8 @@ yarn dev
 - [x] Admin Role-based authentication
 - [x] Connect to database
 - [x] Add OAuth (Try [Clerk](https://clerk.com/))
-- [ ] Shadcn UI
-- [ ] Create card component for tasks
+- [x] Shadcn UI
+- [x] Create card component for tasks
 - [ ] Implement Drag-and-Drop for tasks (dnd-kit)
 - [ ] Global State Management (Redux, React Context, Zustand?)
 - [ ] GraphQL (PostGraphile?)
@@ -28,5 +26,5 @@ yarn dev
 
 ## Notes
 
-- Maybe include a public Welcome Page outside login/signup
 - Database still in POC mode. Simply displaying first row of database at the moment
+- `app/utils/authUtils/returnUserStatus.js` is able to return if the user is logged in. I want this recognition to trigger a `Login/Register` button to appear where the top-right avatar is when user is not logged in.
