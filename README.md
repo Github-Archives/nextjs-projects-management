@@ -19,8 +19,8 @@ yarn dev
 - [x] Admin Role-based authentication
 - [x] Connect to database
 - [x] Add OAuth (Try [Clerk](https://clerk.com/))
-- [ ] Shadcn UI
-- [ ] Create card component for tasks
+- [x] Shadcn UI
+- [x] Create card component for tasks
 - [ ] Implement Drag-and-Drop for tasks (dnd-kit)
 - [ ] Global State Management (Redux, React Context, Zustand?)
 - [ ] GraphQL (PostGraphile?)
@@ -28,5 +28,4 @@ yarn dev
 
 ## Notes
 
-- Maybe include a public Welcome Page outside login/signup
 - Database still in POC mode. Simply displaying first row of database at the moment

@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
+{
+  /* TODO: Fix temporary logged in status */
+}
+import CheckIfLoggedIn from "../utils/authUtils/returnUserStatus";
 
 const Nav = () => {
   return (
@@ -7,10 +12,15 @@ const Nav = () => {
         <div>My Project Management Site</div>
         <div className="flex gap-10">
           <Link href="/">Home</Link>
+          <Link href="/Board">Project Board</Link>
           <Link href="/CreateUser">Create User</Link>
           <Link href="/ClientMember">Client Member</Link>
           <Link href="/Member">Member</Link>
           <Link href="/Public">Public</Link>
+          {/* Clerk Manage Account button */}
+          <UserButton afterSignOutUrl="/" />
+          {/* TODO: Fix temporary logged in status */}
+          <CheckIfLoggedIn />
         </div>
       </nav>
     </header>
