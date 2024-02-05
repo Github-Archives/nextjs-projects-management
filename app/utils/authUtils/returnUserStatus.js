@@ -1,5 +1,5 @@
 // ! This is a test file (delete)
-// ? At the time I wanted a place holder for the top-right avatar when user isn't logged in so spacing stays the same
+// ? At the time I wanted a place-holder for the top-right avatar when user isn't logged in so spacing stays consistent
 
 "use server";
 import { auth, currentUser } from "@clerk/nextjs";
