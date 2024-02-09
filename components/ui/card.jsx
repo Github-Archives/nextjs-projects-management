@@ -12,6 +12,7 @@ const Card = React.forwardRef(({ className, ...props }, ref) => (
 
   <DndContext>
     <Draggable>
+      {/* Droppable not being used right now */}
       <Droppable>
         <div
           ref={ref}
