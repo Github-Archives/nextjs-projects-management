@@ -6,9 +6,9 @@ First, run the development server:
 npm run dev
 ```
 
-## Go to [http://localhost:3000](http://localhost:3000)
+##### Go to [http://localhost:3000](http://localhost:3000)
 
-## [Clerk Dashboard](https://dashboard.clerk.com/sign-in) & [Docs](https://clerk.com/docs)
+##### [Clerk Dashboard](https://dashboard.clerk.com/sign-in) & [Docs](https://clerk.com/docs)
 
 ## Todo
 
