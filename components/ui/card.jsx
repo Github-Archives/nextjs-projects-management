@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+// These are all seperate components, they are just styled differently and can be nested
 const Card = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
