@@ -37,7 +37,7 @@ export const TaskCard = ({ id, title, description, content, footer }) => {
       {...attributes}
       {...listeners}
       style={style}
-      className="card"
+      className="task-card"
     >
       <Card>
         <CardHeader>
