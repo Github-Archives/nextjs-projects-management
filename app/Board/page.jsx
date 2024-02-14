@@ -15,7 +15,7 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { Input } from "../(components)/Input/Input";
 
-// ! Import CardColumn which Imports CardTask
+// Import CardColumn which Imports CardTask
 import { CardColumn } from "../(components)/Column/CardColumn";
 
 const Board = () => {
@@ -44,10 +44,10 @@ const Board = () => {
   ]);
 
   const addCard = (title) => {
-    // Takes in `title` parameter as a String
-    // Take current `tasks` array & return a new array
-    // Spread the old values of the `tasks` &
-    // Add a new object with the id: tasks.length + 1
+    // Takes in a String `title` parameter
+    // Take current `cards` array & return a new array
+    // Spread the old values of the `cards` &
+    // Add a new object with the id: cards.length + 1
     // Add the `title` from the String passed in
     setCards((cards) => [
       ...cards,
@@ -90,9 +90,6 @@ const Board = () => {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-
-  // ! Card Remake (sensors)
-  // * SAME SAME
 
   return (
     <div>
