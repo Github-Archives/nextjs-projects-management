@@ -1,7 +1,7 @@
 // "use client";
 
 import "./CardColumn.css";
-import { CardTask } from "../Task/CardTask";
+import { TaskCard } from "../TaskCard/TaskCard";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -14,7 +14,7 @@ export const CardColumn = ({ cards }) => {
       <SortableContext items={cards} strategy={verticalListSortingStrategy}>
         {cards.map((card) => (
           <div key={card.id}>
-            <CardTask
+            <TaskCard
               id={card.id}
               title={card.title}
               description={card.description}

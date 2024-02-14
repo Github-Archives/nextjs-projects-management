@@ -1,7 +1,7 @@
 // "use client";
 
 import React from "react";
-import "./CardTask.css";
+import "./TaskCard.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -18,7 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export const CardTask = ({ id, title, description, content, footer }) => {
+export const TaskCard = ({ id, title, description, content, footer }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
@@ -37,7 +37,7 @@ export const CardTask = ({ id, title, description, content, footer }) => {
       {...attributes}
       {...listeners}
       style={style}
-      className="card" // * Change to cardTask later (just for CSS right now)
+      className="card"
     >
       <Card>
         <CardHeader>
