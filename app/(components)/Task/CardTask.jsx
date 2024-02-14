@@ -1,7 +1,7 @@
 // "use client";
 
 import React from "react";
-import "./Task.css";
+import "./CardTask.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -18,7 +18,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// export const CardTask = ({ id, title }) => {
 export const CardTask = ({ id, title, description, content, footer }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -38,11 +37,11 @@ export const CardTask = ({ id, title, description, content, footer }) => {
       {...attributes}
       {...listeners}
       style={style}
-      className="task" // * Change to cardTask later (just for CSS right now)
+      className="card" // * Change to cardTask later (just for CSS right now)
     >
       <Card>
         <CardHeader>
-          {/* checkbox shows that state is remembered after shuffle */}
+          {/* Checkbox shows that state is remembered after shuffle */}
           {/* <input type="checkbox" className="checkbox" /> */}
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>

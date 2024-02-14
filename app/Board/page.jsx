@@ -13,7 +13,6 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Column } from "../(components)/Column/Column";
 import { Input } from "../(components)/Input/Input";
 
 // ! Import CardColumn which Imports CardTask

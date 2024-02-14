@@ -1,6 +1,6 @@
 // "use client";
 
-import "./Column.css";
+import "./CardColumn.css";
 import { CardTask } from "../Task/CardTask";
 import {
   SortableContext,
