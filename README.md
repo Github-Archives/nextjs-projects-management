@@ -20,6 +20,10 @@ npm run dev
 - [x] Shadcn UI
 - [x] Create card component for tasks
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
+- [ ] Add the rest of the columns working with DND-Kit
+- [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a modal)
+- [ ] Get rid of `CardColumn.css` & `TaskCard.css` and utilize Tailwind
+- [ ] Fix styling for Column/Cards
 - [ ] Get rid of paranetheses around (components) to -> Components
 - [ ] Global State Management (Redux, React Context, Zustand?)
 - [ ] GraphQL (PostGraphile?)

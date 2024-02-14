@@ -27,8 +27,8 @@ export const TaskCard = ({ id, title, description, content, footer }) => {
   // 'style' Controls what the element looks like while dragging it
   const style = {
     transition, // <- from youtube tutorial
-    transform: CSS.Transform.toString(transform), // <- from youtube tutorial
-    // transform: CSS.Translate.toString(transform), // <- from notes/official tips
+    // transform: CSS.Transform.toString(transform), // <- from youtube tutorial
+    transform: CSS.Translate.toString(transform), // <- from notes/official tips
   };
 
   return (
