@@ -1,10 +1,24 @@
-// ! Done (Card) Except I'm only showing Card `title`, not the rest of card info
+// "use client";
 
 import React from "react";
 import "./Task.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
+import UserIcon from "../../SVG/UserIcon";
+import CalendarIcon from "../../SVG/CalendarIcon";
+import CheckIcon from "../../SVG/CheckIcon";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+// export const CardTask = ({ id, title }) => {
 export const CardTask = ({ id, title, description, content, footer }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -26,9 +40,30 @@ export const CardTask = ({ id, title, description, content, footer }) => {
       style={style}
       className="task" // * Change to cardTask later (just for CSS right now)
     >
-      <input type="checkbox" className="checkbox" />
-      {title}
-      {/* {title, description, content, footer} CHANGE THIS! */}
+      <Card>
+        <CardHeader>
+          {/* checkbox shows that state is remembered after shuffle */}
+          {/* <input type="checkbox" className="checkbox" /> */}
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>{content}</p>
+          <div className="flex items-center space-x-2">
+            <UserIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <span className="text-sm">Assignee: John Doe</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <CalendarIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <span className="text-sm">Due Date: February 20, 2024</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <CheckIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <span className="text-sm">Status: In Progress</span>
+          </div>
+        </CardContent>
+        <CardFooter>{footer}</CardFooter>
+      </Card>
     </div>
   );
 };

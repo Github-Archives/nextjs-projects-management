@@ -1,7 +1,4 @@
-// ! Done (Card)
-
 // "use client";
-import React from "react";
 
 import "./Column.css";
 import { CardTask } from "../Task/CardTask";
@@ -21,8 +18,8 @@ export const CardColumn = ({ cards }) => {
               id={card.id}
               title={card.title}
               description={card.description}
-              content={content}
-              footer={footer}
+              content={card.content}
+              footer={card.footer}
               key={card.id}
             />
           </div>
