@@ -57,7 +57,7 @@ const Board = () => {
     ]);
   };
 
-  // Helper function that takes id of task, goes through the 'tasks' array and finds where the id occurs
+  // Helper function that takes id of task, goes through the 'cards' array and finds where the id occurs
   const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
 
   const cardHandleDragEnd = (event) => {
@@ -68,7 +68,7 @@ const Board = () => {
     // This means it's being let go at the same position it came from. If so do nothing
     if (active.id === over.id) {
       return;
-      // Else: setTasks = update the 'tasks' array
+      // Else: setCards = update the 'cards' array
     } else {
       setCards((cards) => {
         // Gets position of element before it was dragged
