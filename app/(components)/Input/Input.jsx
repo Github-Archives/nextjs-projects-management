@@ -1,6 +1,7 @@
 // "use client";
 
 import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import "./Input.css";
 
 export const Input = ({ onSubmit }) => {
@@ -24,9 +25,9 @@ export const Input = ({ onSubmit }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <button className="button" onClick={handleSubmit}>
+      <Button className="button" onClick={handleSubmit}>
         Add
-      </button>
+      </Button>
     </div>
   );
 };
