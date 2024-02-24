@@ -8,7 +8,7 @@ import {
 } from "@dnd-kit/sortable";
 
 // todo: `title` is only temp for testing
-export const SortableArea = ({ id, cards, title, cardtitle }) => {
+export const SortableArea = ({ key, id, title, cardtitle, cards }) => {
   //   const [idHere, setIdHere] = useState();
   useEffect(() => {
     // console.log(`\n\tId: ${id}\n`);
@@ -19,9 +19,9 @@ export const SortableArea = ({ id, cards, title, cardtitle }) => {
 
   return (
     <SortableContext
+      id={id}
       items={cards}
       strategy={verticalListSortingStrategy}
-      id={id}
     >
       {/* Make CardColumn drag/drop/sortable */}
       <CardColumn id={id} cards={cards} />

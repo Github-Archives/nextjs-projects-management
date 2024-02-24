@@ -15,7 +15,7 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { Input } from "../(components)/Input/Input";
 
-// Import CardColumn which Imports CardTask
+// Import SortableArea-Imports->CardColumn->TaskCard->Card
 import { CardColumn } from "../(components)/Column/CardColumn";
 import { SortableArea } from "../(components)/SortableArea/SortableArea";
 
@@ -52,21 +52,21 @@ const Board = () => {
         // Initial cards for Column 1
         {
           id: 1,
-          title: " 🫥 Card Title 1 ► [A] 🫥 ",
+          title: "•Title (1) ►[A][1]",
           description: "Card Description 1",
           content: "Card Content 1",
           footer: "Card Footer 1",
         },
         {
           id: 2,
-          title: " 🫥 Card Title 2 ► [A] 🫥 ",
+          title: "•Title (2) ►[A][2]",
           description: "Card Description 2",
           content: "Card Content 2",
           footer: "Card Footer 2",
         },
         {
           id: 3,
-          title: " 🫥 Card Title 3 ► [A] 🫥 ",
+          title: "•Title (3) ►[A][3]",
           description: "Card Description 3",
           content: "Card Content 3",
           footer: "Card Footer 3",
@@ -82,21 +82,21 @@ const Board = () => {
         // Initial cards for Column 2
         {
           id: 1,
-          title: " 🫥 Card Title 1 Column 2 ► [B] 🫥 ",
+          title: "••Title (1) ►[B][1]",
           description: "Card Description 1 Column 2",
           content: "Card Content 1 Column 2",
           footer: "Card Footer 1 Column 2",
         },
         {
           id: 2,
-          title: " 🫥 Card Title 2 Column 2 ► [B] 🫥 ",
+          title: "••Title (2) ►[B][2]",
           description: "Card Description 2 Column 2",
           content: "Card Content 2 Column 2",
           footer: "Card Footer 2 Column 2",
         },
         {
           id: 3,
-          title: " 🫥 Card Title 3 Column 2 ► [B] 🫥 ",
+          title: "••Title (3) ►[B][3]",
           description: "Card Description 3 Column 2",
           content: "Card Content 3 Column 2",
           footer: "Card Footer 3 Column 2",
@@ -164,9 +164,11 @@ const Board = () => {
         onDragEnd={cardHandleDragEnd}
       >
         <Input onSubmit={addCard} />
-        {/* <SortableArea cards={cards} /> */}
-        {/* <SortableArea cards={columns.cards} /> */}
-        {/* <CardColumn cards={cards} /> */}
+        {/* ! Another way to loop */}
+        {/* {columns.map((column) => (
+          <SortableArea key={column.id} id={column.id} cards={column.cards} />
+        ))} */}
+
         {columns.map((column) => (
           <div className="flex" key={column.id}>
             {/* Column A */}
@@ -193,10 +195,6 @@ const Board = () => {
             </div>
           </div>
         ))}
-        {/* Render columns dynamically */}
-        {/* {columns.map((column) => (
-          <CardColumn key={column.id} id={column.id} cards={column.cards} />
-        ))} */}
       </DndContext>
     </div>
   );
