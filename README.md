@@ -1,3 +1,14 @@
+# Delete This...
+
+This is what i need to follow for multiple containers:
+https://docs.dndkit.com/presets/sortable#multiple-containers
+
+Also, here's a link to the StoryBook Multiple Containers:
+https://master--5fc05e08a4a65d0021ae0bf2.chromatic.com/?path=/docs/presets-sortable-multiple-containers--basic-setup
+
+Typescript Github versions:
+https://github.com/clauderic/dnd-kit/tree/master/stories
+
 ## Getting Started
 
 First, run the development server:
@@ -21,13 +32,13 @@ npm run dev
 - [x] Create card component for tasks
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [ ] Add the rest of the columns working with DND-Kit
+- [ ] Global State Management:Redux, React Context, Zustand? (`Board/page.jsx`_imports_->`<CardColumn>`->`<TaskCard>`->`<Card>` Right now.. We are now prop drilling 3 layers deep)
 - [ ] Set/Get Card data from database
 - [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
-- [ ] Get rid of `CardColumn.css` & `TaskCard.css` and utilize Tailwind
+- [ ] Get rid of `CardColumn.css` + `TaskCard.css` & utilize Tailwind
 - [ ] Fix styling for Column/Cards
 - [ ] Get rid of paranetheses around (components) to -> Components
 - [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
-- [ ] Global State Management (Redux, React Context, Zustand?)
 - [ ] GraphQL (PostGraphile?)
 - [ ] Validate emails (if we go outside of OAuth)
 
@@ -43,7 +54,7 @@ I have not implemented Draggable & Droppable components the way that the officia
 
 ---
 
-Converting the transform object to a string can feel tedious. Fear not, you can avoid having to do this by hand by importing the CSS utility from the @dnd-kit/utilities package:
+Converting the transform object to a string can feel tedious. You can avoid having to do this by hand by importing the CSS utility from the @dnd-kit/utilities package: ⤵
 
 #### Suggested Usage from offical docs
 

@@ -17,29 +17,92 @@ import { Input } from "../(components)/Input/Input";
 
 // Import CardColumn which Imports CardTask
 import { CardColumn } from "../(components)/Column/CardColumn";
+import { SortableArea } from "../(components)/SortableArea/SortableArea";
 
 const Board = () => {
-  const [cards, setCards] = useState([
+  // const [cards, setCards] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Card Title 1",
+  //     description: "Card Description 1",
+  //     content: "Card Content 1",
+  //     footer: "Card Footer 1",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Card Title 2",
+  //     description: "Card Description 2",
+  //     content: "Card Content 2",
+  //     footer: "Card Footer 2",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Card Title 3",
+  //     description: "Card Description 3",
+  //     content: "Card Content 3",
+  //     footer: "Card Footer 3",
+  //   },
+  // ]);
+
+  const [columns, setColumns] = useState([
     {
-      id: 1,
-      title: "Card Title 1",
-      description: "Card Description 1",
-      content: "Card Content 1",
-      footer: "Card Footer 1",
+      id: "column-1",
+      title: "Column 1 ► |AAA|",
+      cards: [
+        // Initial cards for Column 1
+        {
+          id: 1,
+          title: " 🫥 Card Title 1 ► [A] 🫥 ",
+          description: "Card Description 1",
+          content: "Card Content 1",
+          footer: "Card Footer 1",
+        },
+        {
+          id: 2,
+          title: " 🫥 Card Title 2 ► [A] 🫥 ",
+          description: "Card Description 2",
+          content: "Card Content 2",
+          footer: "Card Footer 2",
+        },
+        {
+          id: 3,
+          title: " 🫥 Card Title 3 ► [A] 🫥 ",
+          description: "Card Description 3",
+          content: "Card Content 3",
+          footer: "Card Footer 3",
+        },
+        // ... Add more initial cards if needed
+      ],
     },
+    // ... Add more columns if needed
     {
-      id: 2,
-      title: "Card Title 2",
-      description: "Card Description 2",
-      content: "Card Content 2",
-      footer: "Card Footer 2",
-    },
-    {
-      id: 3,
-      title: "Card Title 3",
-      description: "Card Description 3",
-      content: "Card Content 3",
-      footer: "Card Footer 3",
+      id: "column-2",
+      title: "Column 2 ► |BBB|",
+      cards: [
+        // Initial cards for Column 2
+        {
+          id: 1,
+          title: " 🫥 Card Title 1 Column 2 ► [B] 🫥 ",
+          description: "Card Description 1 Column 2",
+          content: "Card Content 1 Column 2",
+          footer: "Card Footer 1 Column 2",
+        },
+        {
+          id: 2,
+          title: " 🫥 Card Title 2 Column 2 ► [B] 🫥 ",
+          description: "Card Description 2 Column 2",
+          content: "Card Content 2 Column 2",
+          footer: "Card Footer 2 Column 2",
+        },
+        {
+          id: 3,
+          title: " 🫥 Card Title 3 Column 2 ► [B] 🫥 ",
+          description: "Card Description 3 Column 2",
+          content: "Card Content 3 Column 2",
+          footer: "Card Footer 3 Column 2",
+        },
+        // ... Add more initial cards if needed
+      ],
     },
   ]);
 
@@ -101,7 +164,39 @@ const Board = () => {
         onDragEnd={cardHandleDragEnd}
       >
         <Input onSubmit={addCard} />
-        <CardColumn cards={cards} />
+        {/* <SortableArea cards={cards} /> */}
+        {/* <SortableArea cards={columns.cards} /> */}
+        {/* <CardColumn cards={cards} /> */}
+        {columns.map((column) => (
+          <div className="flex" key={column.id}>
+            {/* Column A */}
+            <div className="flex-shrink-0">
+              <SortableArea
+                id={column.id}
+                title={column.title}
+                cardtitle={
+                  column.id === "column-1" ? column.cards[0]?.title : ""
+                }
+                cards={column.id === "column-1" ? column.cards : []}
+              />
+            </div>
+            {/* Column B */}
+            <div className="flex-shrink-0">
+              <SortableArea
+                id={column.id}
+                title={column.title}
+                cardtitle={
+                  column.id === "column-2" ? column.cards[0]?.title : ""
+                }
+                cards={column.id === "column-2" ? column.cards : []}
+              />
+            </div>
+          </div>
+        ))}
+        {/* Render columns dynamically */}
+        {/* {columns.map((column) => (
+          <CardColumn key={column.id} id={column.id} cards={column.cards} />
+        ))} */}
       </DndContext>
     </div>
   );
