@@ -45,6 +45,7 @@ export const TaskCard = ({ id, title, description, content, footer }) => {
           {/* <input type="checkbox" className="checkbox" /> */}
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
+          <CardDescription>ID: {id}</CardDescription>
         </CardHeader>
         {/* !!! DISABLED TEMPORARILY WHILE I TEST CARD COLUMN SORT */}
         {/* <CardContent>
