@@ -181,6 +181,10 @@ const Board = () => {
       `Filtered Columns: ${JSON.stringify(filteredColumns, null, 2)}`,
     );
     setColumns(filteredColumns);
+
+    // Delete tasks when column is deleted
+    const newTasks = tasks.filter((t) => t.columnId !== id);
+    setTasks(newTasks);
   }
 
   // Update card title
@@ -248,19 +252,31 @@ const Board = () => {
 
     if (!isActiveATask) return;
 
-    // Im dropping a Task over another Task
+    // I'm dropping a Task over another Task
     if (isActiveATask && isOverATask) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
         const overIndex = tasks.findIndex((t) => t.id === overId);
 
         if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
-          // Fix introduced after video recording
+          // ! Fix introduced after video recording
           tasks[activeIndex].columnId = tasks[overIndex].columnId;
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }
 
         return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+
+    // I'm dropping a Task over a Column
+    const isOverAColumn = over.data.current?.type === "Column";
+    if (isActiveATask && isOverAColumn) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+
+        tasks[activeIndex].columnId = overId;
+        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+        return arrayMove(tasks, activeIndex, activeIndex);
       });
     }
   }
@@ -269,19 +285,15 @@ const Board = () => {
     <div>
       <p className="text-4xl">Task Board</p>
       {/* Returns the closest rectangles from an array of rectangles to the center of a given..Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked*/}
-      {/* <button onClick={createNewColumn}>Create Column</button> */}
-      {/* <button onClick={() => {
-          createColumn()
-        }}</button> */}
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         // collisionDetection={closestCenter}
-
         // announcements={defaultAnnouncements}
       >
+        {/* Column */}
         <div className="m-auto flex gap-2">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
