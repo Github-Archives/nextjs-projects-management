@@ -20,23 +20,22 @@ import {
   DragOverlay,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Button } from "@/components/ui/button";
 import { Input } from "../(components)/Input/Input";
+import PlusIcon from "../Icons/PlusIcon";
 
 // Import SortableArea-Imports->CardColumn->TaskCard->Card
-import { CardColumn } from "../(components)/Column/CardColumn";
 import { SortableArea } from "../(components)/SortableArea/SortableArea";
-
-import { Button } from "@/components/ui/button";
 import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
-
-import PlusIcon from "../Icons/PlusIcon";
 
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import ATaskCard from "../(components)/ATaskCard/ATaskCard";
 
 const Board = () => {
+  // ! Debugging Code for dnd-kit methods
   // * Debugging: didn't work
   const defaultAnnouncements = {
     onDragStart(id) {
@@ -67,94 +66,11 @@ const Board = () => {
     },
   };
 
-  // const [cards, setCards] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Card Title 1",
-  //     description: "Card Description 1",
-  //     content: "Card Content 1",
-  //     footer: "Card Footer 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Card Title 2",
-  //     description: "Card Description 2",
-  //     content: "Card Content 2",
-  //     footer: "Card Footer 2",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Card Title 3",
-  //     description: "Card Description 3",
-  //     content: "Card Content 3",
-  //     footer: "Card Footer 3",
-  //   },
-  // ]);
-
-  // const [columns, setColumns] = useState([
-  //   {
-  //     id: "column-1",
-  //     title: "Column 1 ► |AAA|",
-  //     cards: [
-  //       // Initial cards for Column 1
-  //       {
-  //         id: 1,
-  //         title: "•Title (1) ►[A][1]",
-  //         description: "Card Description 1",
-  //         content: "Card Content 1",
-  //         footer: "Card Footer 1",
-  //       },
-  //       {
-  //         id: 2,
-  //         title: "•Title (2) ►[A][2]",
-  //         description: "Card Description 2",
-  //         content: "Card Content 2",
-  //         footer: "Card Footer 2",
-  //       },
-  //       {
-  //         id: 3,
-  //         title: "•Title (3) ►[A][3]",
-  //         description: "Card Description 3",
-  //         content: "Card Content 3",
-  //         footer: "Card Footer 3",
-  //       },
-  //       // ... Add more initial cards if needed
-  //     ],
-  //   },
-  //   // ... Add more columns if needed
-  //   {
-  //     id: "column-2",
-  //     title: "Column 2 ► |BBB|",
-  //     cards: [
-  //       // Initial cards for Column 2
-  //       {
-  //         id: 1,
-  //         title: "••Title (1) ►[B][1]",
-  //         description: "Card Description 1 Column 2",
-  //         content: "Card Content 1 Column 2",
-  //         footer: "Card Footer 1 Column 2",
-  //       },
-  //       {
-  //         id: 2,
-  //         title: "••Title (2) ►[B][2]",
-  //         description: "Card Description 2 Column 2",
-  //         content: "Card Content 2 Column 2",
-  //         footer: "Card Footer 2 Column 2",
-  //       },
-  //       {
-  //         id: 3,
-  //         title: "••Title (3) ►[B][3]",
-  //         description: "Card Description 3 Column 2",
-  //         content: "Card Content 3 Column 2",
-  //         footer: "Card Footer 3 Column 2",
-  //       },
-  //       // ... Add more initial cards if needed
-  //     ],
-  //   },
-  // ]);
-
   const [columns, setColumns] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [activeColumn, setActiveColumn] = useState(null);
+  const [activeTask, setActiveTask] = useState(null);
+
   console.log(columns);
   // console.log(JSON.stringify(columns, null, 2));
 
@@ -173,6 +89,7 @@ const Board = () => {
   // ? useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
+  // ! Not using these underlined methods with new strategy
   const addCard = (title) => {
     // Takes in a String `title` parameter
     // Take current `cards` array & return a new array
@@ -221,7 +138,30 @@ const Board = () => {
   //   }),
   // );
 
-  // ! New from here starting at 8mins: https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
+  // ! New from here starting at 38mins: https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
+  function createTask(columnId) {
+    const newTask = {
+      id: generateId(),
+      columnId,
+      content: `Task ${tasks.length + 1}`,
+    };
+    setTasks([...tasks, newTask]);
+  }
+
+  function updateTask(id, content) {
+    const newTasks = tasks.map((task) => {
+      // if task.id is not the task we want return original task
+      if (task.id !== id) return task;
+      return { ...task, content };
+    });
+    setTasks(newTasks);
+  }
+
+  function deleteTask(id) {
+    const newTasks = tasks.filter((task) => task.id !== id);
+    setTasks(newTasks);
+  }
+
   function createNewColumn() {
     const columnToAdd = {
       id: generateId(),
@@ -243,33 +183,88 @@ const Board = () => {
     setColumns(filteredColumns);
   }
 
+  // Update card title
+  function updateColumn(id, title) {
+    console.log(`updateColumn: id=${id} title=${title}`);
+    const newColumns = columns.map((col) => {
+      if (col.id !== id) {
+        return col;
+      }
+      return { ...col, title };
+    });
+    setColumns(newColumns);
+  }
+
   function onDragStart(event) {
     console.log("onDragStart", event);
     if (event.active.data.current?.type === "Column") {
       setActiveColumn(event.active.data.current.column);
       return;
     }
+
+    if (event.active.data.current?.type === "Task") {
+      setActiveTask(event.active.data.current.task);
+      return;
+    }
   }
 
   function onDragEnd(event) {
-    console.log("onDragEnd", event);
+    setActiveColumn(null);
+    setActiveTask(null);
+
     const { active, over } = event;
     if (!over) return;
-    const activeColumnId = active.id;
-    const overColumnId = over.id;
-    if (activeColumnId === overColumnId) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveAColumn = active.data.current?.type === "Column";
+    if (!isActiveAColumn) return;
+
+    console.log("DRAG END");
 
     setColumns((columns) => {
-      const activeColumnIndex = columns.findIndex(
-        (col) => col.id === activeColumnId,
-      );
-      const overColumnIndex = columns.findIndex(
-        (col) => col.id === overColumnId,
-      );
+      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+
+      const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
       return arrayMove(columns, activeColumnIndex, overColumnIndex);
     });
   }
+
+  function onDragOver(event) {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveATask = active.data.current?.type === "Task";
+    const isOverATask = over.data.current?.type === "Task";
+
+    if (!isActiveATask) return;
+
+    // Im dropping a Task over another Task
+    if (isActiveATask && isOverATask) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const overIndex = tasks.findIndex((t) => t.id === overId);
+
+        if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
+          // Fix introduced after video recording
+          tasks[activeIndex].columnId = tasks[overIndex].columnId;
+          return arrayMove(tasks, activeIndex, overIndex - 1);
+        }
+
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+  }
+
   return (
     <div>
       <p className="text-4xl">Task Board</p>
@@ -282,13 +277,11 @@ const Board = () => {
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
+        onDragOver={onDragOver}
         // collisionDetection={closestCenter}
-        // onDragEnd={cardHandleDragEnd}
 
         // announcements={defaultAnnouncements}
       >
-        {/* <Input onSubmit={addCard} /> */}
-
         <div className="m-auto flex gap-2">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
@@ -297,6 +290,11 @@ const Board = () => {
                   key={col.id}
                   column={col}
                   deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  tasks={tasks.filter((task) => task.columnId === col.id)}
                 />
               ))}
             </SortableContext>
@@ -307,50 +305,32 @@ const Board = () => {
           </Button>
         </div>
 
+        {/* Overlay of ColumnContainer while being dragged */}
         {createPortal(
           <DragOverlay>
             {activeColumn && (
               <ColumnContainer
                 column={activeColumn}
                 deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                tasks={tasks.filter(
+                  (task) => task.columnId === activeColumn.id,
+                )}
+              />
+            )}
+            {activeTask && (
+              <ATaskCard
+                task={activeTask}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
               />
             )}
           </DragOverlay>,
           document.body,
         )}
-
-        {/* ! Another way to loop */}
-        {/* {columns.map((column) => (
-          <SortableArea key={column.id} id={column.id} cards={column.cards} />
-        ))} */}
-        {/* Monitor drag and drop events that happen on the parent `DndContext` provider */}
-
-        {/* {columns.map((column) => (
-          <div className="flex" key={column.id}>
-
-            <div className="flex-shrink-0">
-              <SortableArea
-                id={column.id}
-                title={column.title}
-                cardtitle={
-                  column.id === "column-1" ? column.cards[0]?.title : ""
-                }
-                cards={column.id === "column-1" ? column.cards : []}
-              />
-            </div>
-
-            <div className="flex-shrink-0">
-              <SortableArea
-                id={column.id}
-                title={column.title}
-                cardtitle={
-                  column.id === "column-2" ? column.cards[0]?.title : ""
-                }
-                cards={column.id === "column-2" ? column.cards : []}
-              />
-            </div>
-          </div>
-        ))} */}
       </DndContext>
     </div>
   );

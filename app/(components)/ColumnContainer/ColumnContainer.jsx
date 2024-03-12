@@ -1,14 +1,29 @@
-import React from "react";
+// ! NOTE: I don't think this tailwind addition is doing ANYTHING! `className="border-columnBackgroundColor"`. Nvm, it was suppose to be in my `tailwind.config.js`
 
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-
+import PlusIcon from "@/app/Icons/PlusIcon";
 import TrashIcon from "@/app/Icons/TrashIcon";
-import { useSortable } from "@dnd-kit/sortable";
-
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import ATaskCard from "../ATaskCard/ATaskCard";
 
 function ColumnContainer(props) {
-  const { column, deleteColumn } = props;
+  const {
+    column,
+    deleteColumn,
+    updateColumn,
+    createTask,
+    tasks,
+    deleteTask,
+    updateTask,
+  } = props;
+
+  const [editMode, setEditMode] = useState(false);
+  //
+  const tasksIds = useMemo(() => {
+    return tasks.map((task) => task.id);
+  }, [tasks]);
 
   const {
     setNodeRef,
@@ -23,6 +38,7 @@ function ColumnContainer(props) {
       type: "Column",
       column,
     },
+    disabled: editMode, // Disable Drag+Drop when editing Card Title
   });
 
   const style = {
@@ -48,44 +64,76 @@ function ColumnContainer(props) {
       ref={setNodeRef}
       style={style}
     >
+      {/*
+    ! NEW STYLE IDEA: Make the boxes have a -> COOL ROUNDED-GRADIENT BORDER LIKE THIS: 
+    <div class="border-5 border-transparent rounded-10 bg-gradient-to-tr from-white to-white, bg-gradient-315 from-purple-700 via-red-500 to-yellow-400"></div>
+      */}
+
       {/* Column title */}
       <div
         className="bg-mainBackgroundColor text-md border-columnBackgroundColor flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 p-3 font-bold"
         {...attributes}
         {...listeners}
+        onClick={() => {
+          setEditMode(true);
+        }}
       >
         <div className="flex gap-2">
           <div className="bg-columnBackgroundColor flex items-center justify-center rounded-full px-2 py-1 text-sm">
             0
           </div>
-          {column.title}
+
+          {/* TODO: I think I want all card editing, maybe excluding the title, to be done in the card's modal that expands when clicking on the card */}
+          {!editMode && column.title}
+
+          {/* !!! RIGHT HERE IS WHERE I LEFT OFF @35:20 */}
+          {/* https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s */}
+
+          {editMode && (
+            <input
+              className="rounded border bg-black px-2 outline-none focus:border-rose-500"
+              value={column.title}
+              onChange={(e) => updateColumn(column.id, e.target.value)}
+              autoFocus
+              onBlur={() => {
+                setEditMode(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                setEditMode(false);
+              }}
+            />
+          )}
+          {/* {editMode && <input autoFocus onBlur={() => setEditMode(false)} />} */}
         </div>
       </div>
-      {/* <Button onClick={deleteColumn(column.id)}>Delete</Button> */}
-      {/* <Button onClick={deleteColumn(column.id)}>Delete</Button> */}
       <Button onClick={() => deleteColumn(column.id)}>
         <TrashIcon />
         Delete
       </Button>
-      {/* <button
-        onClick={() => {
-          deleteColumn(column.id);
-        }}
-        className="
-        hover:bg-columnBackgroundColor
-        rounded
-        stroke-gray-500
-        px-1
-        py-2
-        hover:stroke-white
-        "
-      >
-        Delete
-      </button> */}
       {/* Column task container */}
-      <div className="flex flex-grow">Content</div>
-      {/* Column footer */}
-      <div>Footer</div>
+      <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
+        <SortableContext items={tasksIds}>
+          {tasks.map((task) => (
+            <ATaskCard
+              key={task.id}
+              task={task}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+            />
+          ))}
+        </SortableContext>
+      </div>
+      {/* Add Task Button */}
+      <Button
+        className="border-columnBackgroundColor bord border-x-columnBackgroundColor hover:bg-mainBackgroundColor flex items-center gap-2 rounded-md border-2 p-4 hover:text-rose-500 active:bg-black"
+        onClick={() => {
+          createTask(column.id);
+        }}
+      >
+        <PlusIcon />
+        Add task
+      </Button>
     </div>
   );
 }

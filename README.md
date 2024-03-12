@@ -1,9 +1,20 @@
-# Delete This...
+!!! Fucked up somewhere around 53:32 in
+https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
 
-This is what i need to follow for multiple containers:
+# Temp notes...
+
+Video tutorial I'm currently working off of as of March 8 video @~35min (Edit column title):
+Right now I can:
+
+- Add a new column
+- Delete a columnn- Drag/Rearrange columns
+- Currently working on adding ability to Edit column titles (currently at 33:33)
+  https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
+
+Official Docs for Multiple Containers:
 https://docs.dndkit.com/presets/sortable#multiple-containers
 
-Also, here's a link to the StoryBook Multiple Containers:
+Link to working StoryBook Multiple Containers:
 https://master--5fc05e08a4a65d0021ae0bf2.chromatic.com/?path=/docs/presets-sortable-multiple-containers--basic-setup
 
 Typescript Github versions:
@@ -31,8 +42,13 @@ npm run dev
 - [x] Shadcn UI
 - [x] Create card component for tasks
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
-- [ ] Add the rest of the columns working with DND-Kit
-- [ ] Global State Management:Redux, React Context, Zustand? (`Board/page.jsx`_imports_->`<CardColumn>`->`<TaskCard>`->`<Card>` Right now.. We are now prop drilling 3 layers deep)
+- [x] Add the rest of the columns working with DND-Kit
+
+Not using this anymore -->(`Board/page.jsx`_imports_->`<CardColumn>`->`<TaskCard>`->`<Card>` Right now.. We are now prop drilling 3 layers deep)
+
+- [ ] Remove: `<CardColumn>`->`<TaskCard>`->`<Card>` because the new way is just using (`Board/page.jsx`_imports_-> `ColumnContainer`->`TaskCard`)
+- [ ] Rename `ATaskCard` to `TaskCard` after removing unused `TaskCard` component
+- [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
 - [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
 - [ ] Get rid of `CardColumn.css` + `TaskCard.css` & utilize Tailwind

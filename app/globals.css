@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* From tutorial */
+html,
+body,
+#root {
+  @apply box-border bg-black text-white;
+}
+
+/* Horizontal Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-rose-900;
+}
+
+/* Individual TaskCard vertical Scrollbar */
+.task > ::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-sky-500;
+}
