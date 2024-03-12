@@ -1,5 +1,3 @@
-// ! NOTE: I don't think this tailwind addition is doing ANYTHING! `className="border-columnBackgroundColor"`. Nvm, it was suppose to be in my `tailwind.config.js`
-
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import PlusIcon from "@/app/Icons/PlusIcon";
@@ -20,7 +18,7 @@ function ColumnContainer(props) {
   } = props;
 
   const [editMode, setEditMode] = useState(false);
-  //
+
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
   }, [tasks]);
@@ -65,7 +63,7 @@ function ColumnContainer(props) {
       style={style}
     >
       {/*
-    ! NEW STYLE IDEA: Make the boxes have a -> COOL ROUNDED-GRADIENT BORDER LIKE THIS: 
+    ! STYLE IDEA: Make the boxes have a -> COOL ROUNDED-GRADIENT BORDER LIKE THIS: 
     <div class="border-5 border-transparent rounded-10 bg-gradient-to-tr from-white to-white, bg-gradient-315 from-purple-700 via-red-500 to-yellow-400"></div>
       */}
 
@@ -86,9 +84,6 @@ function ColumnContainer(props) {
           {/* TODO: I think I want all card editing, maybe excluding the title, to be done in the card's modal that expands when clicking on the card */}
           {!editMode && column.title}
 
-          {/* !!! RIGHT HERE IS WHERE I LEFT OFF @35:20 */}
-          {/* https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s */}
-
           {editMode && (
             <input
               className="rounded border bg-black px-2 outline-none focus:border-rose-500"
@@ -104,7 +99,6 @@ function ColumnContainer(props) {
               }}
             />
           )}
-          {/* {editMode && <input autoFocus onBlur={() => setEditMode(false)} />} */}
         </div>
       </div>
       <Button onClick={() => deleteColumn(column.id)}>

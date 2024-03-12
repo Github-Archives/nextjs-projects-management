@@ -1,9 +1,4 @@
 "use client";
-
-// *Feb 26th 2024*
-// ! This is the new video I'm going off of which is working so far, in that I have addable/deletable columns:
-//@19:43-> https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
-
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -35,8 +30,7 @@ import {
 import ATaskCard from "../(components)/ATaskCard/ATaskCard";
 
 const Board = () => {
-  // ! Debugging Code for dnd-kit methods
-  // * Debugging: didn't work
+  // ! Debugging Code for dnd-kit methods (currently not connected)
   const defaultAnnouncements = {
     onDragStart(id) {
       console.log(`Picked up draggable item ${id}.`);
@@ -129,6 +123,7 @@ const Board = () => {
     }
   };
 
+  // ! Legacy code from previous strategy. Experiment to see if it will still work
   // This is so DND-Kit works on Mobile and Keyboard
   // const sensors = useSensors(
   //   useSensor(PointerSensor),
@@ -138,7 +133,6 @@ const Board = () => {
   //   }),
   // );
 
-  // ! New from here starting at 38mins: https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
   function createTask(columnId) {
     const newTask = {
       id: generateId(),
@@ -231,7 +225,6 @@ const Board = () => {
 
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
-
       const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
       return arrayMove(columns, activeColumnIndex, overColumnIndex);
@@ -259,7 +252,6 @@ const Board = () => {
         const overIndex = tasks.findIndex((t) => t.id === overId);
 
         if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
-          // ! Fix introduced after video recording
           tasks[activeIndex].columnId = tasks[overIndex].columnId;
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }
@@ -284,14 +276,14 @@ const Board = () => {
   return (
     <div>
       <p className="text-4xl">Task Board</p>
-      {/* Returns the closest rectangles from an array of rectangles to the center of a given..Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked*/}
+      {/* Returns the closest rectangles from an array of rectangles to the center of a given. Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked (collisionDetection unused rn)*/}
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         // collisionDetection={closestCenter}
-        // announcements={defaultAnnouncements}
+        // announcements={defaultAnnouncements} // TODO: Try to get working
       >
         {/* Column */}
         <div className="m-auto flex gap-2">
@@ -317,6 +309,9 @@ const Board = () => {
           </Button>
         </div>
 
+        {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component
+        This new component might be called <ColumnDragOverlay> that does not require all of the properties that our <ColumnContainer> requires because the DragOverlay is not interactive. For example: deleteColumn,updateColumn,createTask,deleteTask,updateTask are not required. I believe because you don't need to use these properties while the component is in the middle of being dragged.
+        */}
         {/* Overlay of ColumnContainer while being dragged */}
         {createPortal(
           <DragOverlay>

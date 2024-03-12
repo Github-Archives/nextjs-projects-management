@@ -1,4 +1,4 @@
-!!! Fucked up somewhere around 53:32 in
+Video tutorial that assisted:
 https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
 
 # Temp notes...
@@ -44,19 +44,32 @@ npm run dev
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [x] Add the rest of the columns working with DND-Kit
 
-Not using this anymore -->(`Board/page.jsx`_imports_->`<CardColumn>`->`<TaskCard>`->`<Card>` Right now.. We are now prop drilling 3 layers deep)
+Not using this anymore →(`Board/page.jsx`*imports*→`<CardColumn>`→`<TaskCard>`→`<Card>`)
 
-- [ ] Remove: `<CardColumn>`->`<TaskCard>`->`<Card>` because the new way is just using (`Board/page.jsx`_imports_-> `ColumnContainer`->`TaskCard`)
+- [ ] Remove: `<CardColumn>`→`<TaskCard>`→`<Card>` because the new way is just using (`Board/page.jsx`*imports*→ `ColumnContainer`→`TaskCard`)
 - [ ] Rename `ATaskCard` to `TaskCard` after removing unused `TaskCard` component
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
 - [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
 - [ ] Get rid of `CardColumn.css` + `TaskCard.css` & utilize Tailwind
 - [ ] Fix styling for Column/Cards
-- [ ] Get rid of paranetheses around (components) to -> Components
+- [ ] Get rid of paranetheses around (components) to → Components
 - [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [ ] GraphQL (PostGraphile?)
 - [ ] Validate emails (if we go outside of OAuth)
+
+---
+
+## Bugs 🐞
+
+- [ ] Task Number is duplicate when deleting column in a certain way then adding a new task to a new column
+      Steps to reproduce:
+  1. Add 3 new columns
+  2. Add 1 task to each column
+  3. Delete the 2nd column (middle column)
+  4. Add another new column (there should be 3 columns now)
+  5. Add a new task
+  6. Notice the task number is 3 instead of 4
 
 ---
 
