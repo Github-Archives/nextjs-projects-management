@@ -1,0 +1,18 @@
+- Go to https://heroicons.com/ and search for icon
+- Copy`JSX`
+- Paste it into new `SomethingIcon.jsx` file that looks like this
+
+```
+import React from "react";
+
+function PlusIcon() {
+  return (
+    ...Paste Copied JSX Here
+  )
+}
+
+export default PlusIcon;
+```
+
+Then import and use component.
+We need to decide if we use these Icons or SVG folder icons..

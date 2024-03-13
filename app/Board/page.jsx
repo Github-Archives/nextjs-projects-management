@@ -1,9 +1,10 @@
 "use client";
-
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 import {
   DndContext,
+  useDndMonitor,
   closestCenter,
   useSensor,
   useSensors,
@@ -11,38 +12,88 @@ import {
   TouchSensor,
   KeyboardSensor,
   sortableKeyboardCoordinates,
+  DragOverlay,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Button } from "@/components/ui/button";
 import { Input } from "../(components)/Input/Input";
+import PlusIcon from "../Icons/PlusIcon";
 
-// Import CardColumn which Imports CardTask
-import { CardColumn } from "../(components)/Column/CardColumn";
+// Import SortableArea-Imports->CardColumn->TaskCard->Card
+import { SortableArea } from "../(components)/SortableArea/SortableArea";
+import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
+
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import ATaskCard from "../(components)/ATaskCard/ATaskCard";
 
 const Board = () => {
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      title: "Card Title 1",
-      description: "Card Description 1",
-      content: "Card Content 1",
-      footer: "Card Footer 1",
+  // ! Debugging Code for dnd-kit methods (currently not connected)
+  const defaultAnnouncements = {
+    onDragStart(id) {
+      console.log(`Picked up draggable item ${id}.`);
     },
-    {
-      id: 2,
-      title: "Card Title 2",
-      description: "Card Description 2",
-      content: "Card Content 2",
-      footer: "Card Footer 2",
-    },
-    {
-      id: 3,
-      title: "Card Title 3",
-      description: "Card Description 3",
-      content: "Card Content 3",
-      footer: "Card Footer 3",
-    },
-  ]);
+    onDragOver(id, overId) {
+      if (overId) {
+        console.log(
+          `Draggable item ${id} was moved over droppable area ${overId}.`,
+        );
+        return;
+      }
 
+      console.log(`Draggable item ${id} is no longer over a droppable area.`);
+    },
+    onDragEnd(id, overId) {
+      if (overId) {
+        console.log(
+          `Draggable item ${id} was dropped over droppable area ${overId}`,
+        );
+        return;
+      }
+
+      console.log(`Draggable item ${id} was dropped.`);
+    },
+    onDragCancel(id) {
+      console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
+    },
+  };
+
+  const [columns, setColumns] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [activeColumn, setActiveColumn] = useState(null);
+  const [activeTask, setActiveTask] = useState(null);
+
+  console.log(columns);
+  // console.log(JSON.stringify(columns, null, 2));
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 3, // 3px
+      },
+    }),
+    // useSensor(PointerSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  // // This is so DND-Kit works on Mobile and Keyboard
+  // const sensors = useSensors(
+  //   useSensor(PointerSensor),
+  //   useSensor(TouchSensor),
+  //   useSensor(KeyboardSensor, {
+  //     coordinateGetter: sortableKeyboardCoordinates,
+  //   }),
+  // );
+
+  // ? useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
+  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+
+  // ! Not using these underlined methods with new strategy
   const addCard = (title) => {
     // Takes in a String `title` parameter
     // Take current `cards` array & return a new array
@@ -82,26 +133,221 @@ const Board = () => {
     }
   };
 
+  // ! Legacy code from previous strategy. Experiment to see if it will still work
   // This is so DND-Kit works on Mobile and Keyboard
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
+  // const sensors = useSensors(
+  //   useSensor(PointerSensor),
+  //   useSensor(TouchSensor),
+  //   useSensor(KeyboardSensor, {
+  //     coordinateGetter: sortableKeyboardCoordinates,
+  //   }),
+  // );
+
+  function createTask(columnId) {
+    const newTask = {
+      id: generateId(),
+      columnId,
+      content: `Task ${tasks.length + 1}`,
+    };
+    setTasks([...tasks, newTask]);
+  }
+
+  function updateTask(id, content) {
+    const newTasks = tasks.map((task) => {
+      // if task.id is not the task we want return original task
+      if (task.id !== id) return task;
+      return { ...task, content };
+    });
+    setTasks(newTasks);
+  }
+
+  function deleteTask(id) {
+    const newTasks = tasks.filter((task) => task.id !== id);
+    setTasks(newTasks);
+  }
+
+  function createNewColumn() {
+    const columnToAdd = {
+      id: generateId(),
+      title: `Column ${columns.length + 1}`,
+    };
+    setColumns([...columns, columnToAdd]);
+  }
+
+  function generateId() {
+    // Generate a random number between 0 and 10000
+    return Math.floor(Math.random() * 10001);
+  }
+
+  function deleteColumn(id) {
+    const filteredColumns = columns.filter((col) => col.id !== id);
+    console.log(
+      `Filtered Columns: ${JSON.stringify(filteredColumns, null, 2)}`,
+    );
+    setColumns(filteredColumns);
+
+    // Delete tasks when column is deleted
+    const newTasks = tasks.filter((t) => t.columnId !== id);
+    setTasks(newTasks);
+  }
+
+  // Update card title
+  function updateColumn(id, title) {
+    console.log(`updateColumn: id=${id} title=${title}`);
+    const newColumns = columns.map((col) => {
+      if (col.id !== id) {
+        return col;
+      }
+      return { ...col, title };
+    });
+    setColumns(newColumns);
+  }
+
+  function onDragStart(event) {
+    console.log("onDragStart", event);
+    if (event.active.data.current?.type === "Column") {
+      setActiveColumn(event.active.data.current.column);
+      return;
+    }
+
+    if (event.active.data.current?.type === "Task") {
+      setActiveTask(event.active.data.current.task);
+      return;
+    }
+  }
+
+  function onDragEnd(event) {
+    setActiveColumn(null);
+    setActiveTask(null);
+
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveAColumn = active.data.current?.type === "Column";
+    if (!isActiveAColumn) return;
+
+    console.log("DRAG END");
+
+    setColumns((columns) => {
+      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+      const overColumnIndex = columns.findIndex((col) => col.id === overId);
+
+      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+    });
+  }
+
+  function onDragOver(event) {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveATask = active.data.current?.type === "Task";
+    const isOverATask = over.data.current?.type === "Task";
+
+    if (!isActiveATask) return;
+
+    // I'm dropping a Task over another Task
+    if (isActiveATask && isOverATask) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const overIndex = tasks.findIndex((t) => t.id === overId);
+
+        if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
+          tasks[activeIndex].columnId = tasks[overIndex].columnId;
+          return arrayMove(tasks, activeIndex, overIndex - 1);
+        }
+
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+
+    // I'm dropping a Task over a Column
+    const isOverAColumn = over.data.current?.type === "Column";
+    if (isActiveATask && isOverAColumn) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+
+        tasks[activeIndex].columnId = overId;
+        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+        return arrayMove(tasks, activeIndex, activeIndex);
+      });
+    }
+  }
 
   return (
     <div>
       <p className="text-4xl">Task Board</p>
-      {/* Returns the closest rectangles from an array of rectangles to the center of a given..Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked*/}
+      {/* Returns the closest rectangles from an array of rectangles to the center of a given. Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked (collisionDetection unused rn)*/}
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={cardHandleDragEnd}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDragOver={onDragOver}
+        // collisionDetection={closestCenter}
+        // announcements={defaultAnnouncements} // TODO: Try to get working
       >
-        <Input onSubmit={addCard} />
-        <CardColumn cards={cards} />
+        {/* Column */}
+        <div className="m-auto flex gap-2">
+          <div className="flex gap-4">
+            <SortableContext items={columnsId}>
+              {columns.map((col) => (
+                <ColumnContainer
+                  key={col.id}
+                  column={col}
+                  deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  tasks={tasks.filter((task) => task.columnId === col.id)}
+                />
+              ))}
+            </SortableContext>
+          </div>
+          <Button onClick={createNewColumn}>
+            <PlusIcon />
+            Create Column
+          </Button>
+        </div>
+
+        {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component
+        This new component might be called <ColumnDragOverlay> that does not require all of the properties that our <ColumnContainer> requires because the DragOverlay is not interactive. For example: deleteColumn,updateColumn,createTask,deleteTask,updateTask are not required. I believe because you don't need to use these properties while the component is in the middle of being dragged.
+        */}
+        {/* Overlay of ColumnContainer while being dragged */}
+        {createPortal(
+          <DragOverlay>
+            {activeColumn && (
+              <ColumnContainer
+                column={activeColumn}
+                deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                tasks={tasks.filter(
+                  (task) => task.columnId === activeColumn.id,
+                )}
+              />
+            )}
+            {activeTask && (
+              <ATaskCard
+                task={activeTask}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
+              />
+            )}
+          </DragOverlay>,
+          document.body,
+        )}
       </DndContext>
     </div>
   );

@@ -1,3 +1,25 @@
+Video tutorial that assisted:
+https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
+
+# Temp notes...
+
+Video tutorial I'm currently working off of as of March 8 video @~35min (Edit column title):
+Right now I can:
+
+- Add a new column
+- Delete a columnn- Drag/Rearrange columns
+- Currently working on adding ability to Edit column titles (currently at 33:33)
+  https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
+
+Official Docs for Multiple Containers:
+https://docs.dndkit.com/presets/sortable#multiple-containers
+
+Link to working StoryBook Multiple Containers:
+https://master--5fc05e08a4a65d0021ae0bf2.chromatic.com/?path=/docs/presets-sortable-multiple-containers--basic-setup
+
+Typescript Github versions:
+https://github.com/clauderic/dnd-kit/tree/master/stories
+
 ## Getting Started
 
 First, run the development server:
@@ -20,15 +42,36 @@ npm run dev
 - [x] Shadcn UI
 - [x] Create card component for tasks
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
+- [x] Add the rest of the columns working with DND-Kit
+
+Not using this anymore →(`Board/page.jsx`*imports*→`<CardColumn>`→`<TaskCard>`→`<Card>`)
+
+- [ ] Remove: `<CardColumn>`→`<TaskCard>`→`<Card>` because the new way is just using (`Board/page.jsx`*imports*→ `ColumnContainer`→`TaskCard`)
+- [ ] Rename `ATaskCard` to `TaskCard` after removing unused `TaskCard` component
+- [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
-- [ ] Add the rest of the columns working with DND-Kit
-- [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a modal)
-- [ ] Get rid of `CardColumn.css` & `TaskCard.css` and utilize Tailwind
+- [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
+- [ ] Get rid of `CardColumn.css` + `TaskCard.css` & utilize Tailwind
 - [ ] Fix styling for Column/Cards
-- [ ] Get rid of paranetheses around (components) to -> Components
-- [ ] Global State Management (Redux, React Context, Zustand?)
+- [ ] Get rid of paranetheses around (components) to → Components
+- [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [ ] GraphQL (PostGraphile?)
 - [ ] Validate emails (if we go outside of OAuth)
+
+---
+
+## Bugs 🐞
+
+- [ ] Task Number is duplicate when deleting column in a certain way then adding a new task to a new column
+      Steps to reproduce:
+  1. Add 2 new columns
+  2. Add 1 task to each column
+  3. Delete the 1st column
+  4. Add a new column (there should be 2 columns now)
+  5. Add a new task to the new 2nd column
+  6. Notice the task number is 2 instead of 3
+  7. **More Importantly!**, Notice that both columns are `Column 2`
+- [ ] Issue with dragging Tasks while on mobile. Dragging columns fixed with `touch-none`
 
 ---
 
@@ -42,7 +85,7 @@ I have not implemented Draggable & Droppable components the way that the officia
 
 ---
 
-Converting the transform object to a string can feel tedious. Fear not, you can avoid having to do this by hand by importing the CSS utility from the @dnd-kit/utilities package:
+Converting the transform object to a string can feel tedious. You can avoid having to do this by hand by importing the CSS utility from the @dnd-kit/utilities package: ⤵
 
 #### Suggested Usage from offical docs
 

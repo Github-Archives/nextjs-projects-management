@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import React from "react";
 import "./TaskCard.css";
@@ -41,12 +41,14 @@ export const TaskCard = ({ id, title, description, content, footer }) => {
     >
       <Card>
         <CardHeader>
-          {/* Checkbox shows that state is remembered after shuffle */}
+          {/* Checkbox proves that check state is remembered after card shuffle */}
           {/* <input type="checkbox" className="checkbox" /> */}
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
+          <CardDescription>ID: {id}</CardDescription>
         </CardHeader>
-        <CardContent>
+        {/* !!! DISABLED TEMPORARILY WHILE I TEST CARD COLUMN SORT */}
+        {/* <CardContent>
           <p>{content}</p>
           <div className="flex items-center space-x-2">
             <UserIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -61,7 +63,7 @@ export const TaskCard = ({ id, title, description, content, footer }) => {
             <span className="text-sm">Status: In Progress</span>
           </div>
         </CardContent>
-        <CardFooter>{footer}</CardFooter>
+        <CardFooter>{footer}</CardFooter> */}
       </Card>
     </div>
   );
