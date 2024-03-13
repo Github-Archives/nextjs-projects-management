@@ -49,7 +49,7 @@ function ColumnContainer(props) {
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-columnBackgroundColor flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-rose-500 opacity-40"
+        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-rose-500 bg-columnBackgroundColor opacity-40"
       >
         {" "}
       </div>
@@ -58,18 +58,18 @@ function ColumnContainer(props) {
 
   return (
     <div
-      className="bg-columnBackgroundColor flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md"
+      className="flex h-[500px] max-h-[500px] w-[350px] touch-none flex-col rounded-md bg-columnBackgroundColor"
       ref={setNodeRef}
       style={style}
     >
       {/*
-    ! STYLE IDEA: Make the boxes have a -> COOL ROUNDED-GRADIENT BORDER LIKE THIS: 
-    <div class="border-5 border-transparent rounded-10 bg-gradient-to-tr from-white to-white, bg-gradient-315 from-purple-700 via-red-500 to-yellow-400"></div>
+      ! STYLE IDEA: Make the boxes have a -> COOL ROUNDED-GRADIENT BORDER LIKE THIS: 
+      <div class="border-5 border-transparent rounded-10 bg-gradient-to-tr from-white to-white, bg-gradient-315 from-purple-700 via-red-500 to-yellow-400"></div>
       */}
 
       {/* Column title */}
       <div
-        className="bg-mainBackgroundColor text-md border-columnBackgroundColor flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 p-3 font-bold"
+        className="text-md flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-columnBackgroundColor bg-mainBackgroundColor p-3 font-bold"
         {...attributes}
         {...listeners}
         onClick={() => {
@@ -77,7 +77,7 @@ function ColumnContainer(props) {
         }}
       >
         <div className="flex gap-2">
-          <div className="bg-columnBackgroundColor flex items-center justify-center rounded-full px-2 py-1 text-sm">
+          <div className="flex items-center justify-center rounded-full bg-columnBackgroundColor px-2 py-1 text-sm">
             0
           </div>
 
@@ -101,7 +101,10 @@ function ColumnContainer(props) {
           )}
         </div>
       </div>
-      <Button onClick={() => deleteColumn(column.id)}>
+      <Button
+        className="hover:ring-2 hover:ring-inset hover:ring-rose-500"
+        onClick={() => deleteColumn(column.id)}
+      >
         <TrashIcon />
         Delete
       </Button>
@@ -120,7 +123,7 @@ function ColumnContainer(props) {
       </div>
       {/* Add Task Button */}
       <Button
-        className="border-columnBackgroundColor bord border-x-columnBackgroundColor hover:bg-mainBackgroundColor flex items-center gap-2 rounded-md border-2 p-4 hover:text-rose-500 active:bg-black"
+        className="flex items-center gap-2 rounded-md border-2 border-columnBackgroundColor border-x-columnBackgroundColor p-4 hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
         onClick={() => {
           createTask(column.id);
         }}

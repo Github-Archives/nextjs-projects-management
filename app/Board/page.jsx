@@ -74,11 +74,21 @@ const Board = () => {
         distance: 3, // 3px
       },
     }),
+    // useSensor(PointerSensor),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  // // This is so DND-Kit works on Mobile and Keyboard
+  // const sensors = useSensors(
+  //   useSensor(PointerSensor),
+  //   useSensor(TouchSensor),
+  //   useSensor(KeyboardSensor, {
+  //     coordinateGetter: sortableKeyboardCoordinates,
+  //   }),
+  // );
 
   // ? useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);

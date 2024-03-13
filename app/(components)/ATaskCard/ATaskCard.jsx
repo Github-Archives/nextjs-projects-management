@@ -34,10 +34,12 @@ function ATaskCard({ task, deleteTask, updateTask }) {
     setMouseIsOver(false);
   };
 
+  // Returns TaskCard slot where being dragged from, then dragged to
   if (isDragging) {
+    // bg-mainBackgroundColor
     return (
       <div
-        className="bg-mainBackgroundColor task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl border-2 border-rose-500 p-2.5 text-left opacity-50"
+        className="task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl border-2 border-rose-500 bg-green-600 p-2.5 text-left opacity-50"
         ref={setNodeRef}
         style={style}
       />
@@ -48,7 +50,7 @@ function ATaskCard({ task, deleteTask, updateTask }) {
   if (editMode) {
     return (
       <div
-        className="bg-mainBackgroundColor relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
+        className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-blue-900 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
         ref={setNodeRef}
         style={style}
         {...attributes}
@@ -58,7 +60,7 @@ function ATaskCard({ task, deleteTask, updateTask }) {
           className="h-[90%] w-full resize-none rounded border-none bg-transparent text-white focus:outline-none"
           value={task.content}
           autoFocus
-          placeholder="Task content here"
+          placeholder="Task content here. Press Shift+Enter to Submit"
           onBlur={toggleEditMode}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
@@ -71,10 +73,10 @@ function ATaskCard({ task, deleteTask, updateTask }) {
     );
   }
 
-  // This is returned when NOT IN EDIT MODE
+  // This is returned when NOT IN EDIT MODE (Standard)
   return (
     <div
-      className="bg-mainBackgroundColor task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
+      className="task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-red-800 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -92,7 +94,7 @@ function ATaskCard({ task, deleteTask, updateTask }) {
       </p>
       {mouseIsOver && (
         <button
-          className="top-1/2-translate-y-1/2 bg-columnBackgroundColor absolute right-4 rounded stroke-white p-2 opacity-60 hover:opacity-100"
+          className="top-1/2-translate-y-1/2 absolute right-4 rounded bg-columnBackgroundColor stroke-white p-2 opacity-60 hover:opacity-100"
           onClick={() => {
             deleteTask(task.id);
           }}
