@@ -81,15 +81,6 @@ const Board = () => {
     }),
   );
 
-  // // This is so DND-Kit works on Mobile and Keyboard
-  // const sensors = useSensors(
-  //   useSensor(PointerSensor),
-  //   useSensor(TouchSensor),
-  //   useSensor(KeyboardSensor, {
-  //     coordinateGetter: sortableKeyboardCoordinates,
-  //   }),
-  // );
-
   // ? useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
@@ -107,10 +98,8 @@ const Board = () => {
       //   { id: cards.length + 1, title, description, content, footer },
     ]);
   };
-
   // Helper function that takes id of task, goes through the 'cards' array and finds where the id occurs
   const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
-
   const cardHandleDragEnd = (event) => {
     console.log("onDragEnd", event);
     // active = element currently dragging
@@ -319,7 +308,7 @@ const Board = () => {
           </Button>
         </div>
 
-        {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component
+        {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component..
         This new component might be called <ColumnDragOverlay> that does not require all of the properties that our <ColumnContainer> requires because the DragOverlay is not interactive. For example: deleteColumn,updateColumn,createTask,deleteTask,updateTask are not required. I believe because you don't need to use these properties while the component is in the middle of being dragged.
         */}
         {/* Overlay of ColumnContainer while being dragged */}
