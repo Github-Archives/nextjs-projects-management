@@ -6,6 +6,8 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import ATaskCard from "../ATaskCard/ATaskCard";
 
+import PropTypes from "prop-types";
+
 function ColumnContainer(props) {
   const {
     column,
@@ -136,3 +138,23 @@ function ColumnContainer(props) {
 }
 
 export default ColumnContainer;
+
+// PropTypes
+ColumnContainer.propTypes = {
+  column: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+  deleteColumn: PropTypes.func.isRequired,
+  updateColumn: PropTypes.func.isRequired,
+  createTask: PropTypes.func.isRequired,
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      // Include other task properties here
+    }),
+  ).isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+};

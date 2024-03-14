@@ -16,16 +16,16 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
-import { Input } from "../(components)/Input/Input";
+// import { Input } from "../(components)/Input/Input";
 import PlusIcon from "../Icons/PlusIcon";
 
 // Import SortableArea-Imports->CardColumn->TaskCard->Card
-import { SortableArea } from "../(components)/SortableArea/SortableArea";
+// import { SortableArea } from "../(components)/SortableArea/SortableArea";
 import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
 
 import {
   SortableContext,
-  verticalListSortingStrategy,
+  // verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import ATaskCard from "../(components)/ATaskCard/ATaskCard";
 
@@ -124,7 +124,14 @@ const Board = () => {
   //   }
   // };
 
+  function generateId() {
+    // Generate random number between 0-10000 for each new Column and Task id
+    return Math.floor(Math.random() * 10001);
+  }
+
+  // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
   function createTask(columnId) {
+    // ! IMPORTANT Is columnId What We Need!?
     const newTask = {
       id: generateId(),
       columnId,
@@ -147,8 +154,10 @@ const Board = () => {
   function deleteTask(id) {
     const newTasks = tasks.filter((task) => task.id !== id);
     setTasks(newTasks);
-  }
+  } // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
 
+  // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
+  // ! Create New Column
   function createNewColumn() {
     const columnToAdd = {
       id: generateId(),
@@ -157,11 +166,7 @@ const Board = () => {
     setColumns([...columns, columnToAdd]);
   }
 
-  function generateId() {
-    // Generate a random number between 0 and 10000
-    return Math.floor(Math.random() * 10001);
-  }
-
+  // ! Delete Column
   function deleteColumn(id) {
     const filteredColumns = columns.filter((col) => col.id !== id);
     console.log(
@@ -174,6 +179,7 @@ const Board = () => {
     setTasks(newTasks);
   }
 
+  // ! Is this where I"m actually suppose to fix the bug?
   // Update card title
   function updateColumn(id, title) {
     console.log(`updateColumn: id=${id} title=${title}`);
@@ -184,7 +190,7 @@ const Board = () => {
       return { ...col, title };
     });
     setColumns(newColumns);
-  }
+  } // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
 
   function onDragStart(event) {
     console.log("onDragStart", event);
@@ -313,7 +319,7 @@ const Board = () => {
 
         {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component..
         This new component might be called <ColumnDragOverlay> that does not require all of the properties that our <ColumnContainer> requires because the DragOverlay is not interactive. For example: deleteColumn,updateColumn,createTask,deleteTask,updateTask are not required. I believe because you don't need to use these properties while the component is in the middle of being dragged.
-        */}
+      */}
         {/* Overlay of ColumnContainer while being dragged */}
         {createPortal(
           <DragOverlay>
