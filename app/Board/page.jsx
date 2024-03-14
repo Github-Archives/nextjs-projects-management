@@ -144,7 +144,9 @@ const Board = () => {
   function updateTask(id, content) {
     const newTasks = tasks.map((task) => {
       // if task.id is not the task we want return original task
-      if (task.id !== id) return task;
+      if (task.id !== id) {
+        return task;
+      }
       return { ...task, content };
     });
     setTasks(newTasks);
@@ -210,16 +212,21 @@ const Board = () => {
     setActiveTask(null);
 
     const { active, over } = event;
-    if (!over) return;
+    if (!over) {
+      return;
+    }
 
     const activeId = active.id;
     const overId = over.id;
 
-    if (activeId === overId) return;
+    if (activeId === overId) {
+      return;
+    }
 
     const isActiveAColumn = active.data.current?.type === "Column";
-    if (!isActiveAColumn) return;
-
+    if (!isActiveAColumn) {
+      return;
+    }
     console.log("DRAG END");
 
     setColumns((columns) => {
@@ -232,17 +239,23 @@ const Board = () => {
 
   function onDragOver(event) {
     const { active, over } = event;
-    if (!over) return;
+    if (!over) {
+      return;
+    }
 
     const activeId = active.id;
     const overId = over.id;
 
-    if (activeId === overId) return;
+    if (activeId === overId) {
+      return;
+    }
 
     const isActiveATask = active.data.current?.type === "Task";
     const isOverATask = over.data.current?.type === "Task";
 
-    if (!isActiveATask) return;
+    if (!isActiveATask) {
+      return;
+    }
 
     // I'm dropping a Task over another Task
     if (isActiveATask && isOverATask) {
