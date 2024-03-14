@@ -68,6 +68,7 @@ const Board = () => {
   console.log(columns);
   // console.log(JSON.stringify(columns, null, 2));
 
+  // This is so DND-Kit works on Mobile and Keyboard
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -85,52 +86,43 @@ const Board = () => {
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   // ! Not using these underlined methods with new strategy
-  const addCard = (title) => {
-    // Takes in a String `title` parameter
-    // Take current `cards` array & return a new array
-    // Spread the old values of the `cards` &
-    // Add a new object with the id: cards.length + 1
-    // Add the `title` from the String passed in
-    setCards((cards) => [
-      ...cards,
-      { id: cards.length + 1, title },
-      // ! It will be more like below when I start updating all sections of Card via modal
-      //   { id: cards.length + 1, title, description, content, footer },
-    ]);
-  };
-  // Helper function that takes id of task, goes through the 'cards' array and finds where the id occurs
-  const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
-  const cardHandleDragEnd = (event) => {
-    console.log("onDragEnd", event);
-    // active = element currently dragging
-    // over = element which will be replaced, once we let go of the active element
-    const { active, over } = event;
-    // This means it's being let go at the same position it came from. If so do nothing
-    if (active.id === over.id) {
-      return;
-      // Else: setCards = update the 'cards' array
-    } else {
-      setCards((cards) => {
-        // Gets position of element before it was dragged
-        const originalPosition = getCardPosition(active.id);
-        // Gets the new position of the element, where it should be after the array is updated
-        const newPosition = getCardPosition(over.id);
-        // Here DND-Kit gives us a utility funciton that updates array based on original & new position
-        // array to update, original pos, new pos
-        return arrayMove(cards, originalPosition, newPosition);
-      });
-    }
-  };
+  // const addCard = (title) => {
+  //   // Takes in a String `title` parameter
+  //   // Take current `cards` array & return a new array
+  //   // Spread the old values of the `cards` &
+  //   // Add a new object with the id: cards.length + 1
+  //   // Add the `title` from the String passed in
+  //   setCards((cards) => [
+  //     ...cards,
+  //     { id: cards.length + 1, title },
+  //     // ! It will be more like below when I start updating all sections of Card via modal
+  //     //   { id: cards.length + 1, title, description, content, footer },
+  //   ]);
+  // };
 
-  // ! Legacy code from previous strategy. Experiment to see if it will still work
-  // This is so DND-Kit works on Mobile and Keyboard
-  // const sensors = useSensors(
-  //   useSensor(PointerSensor),
-  //   useSensor(TouchSensor),
-  //   useSensor(KeyboardSensor, {
-  //     coordinateGetter: sortableKeyboardCoordinates,
-  //   }),
-  // );
+  // Helper function that takes id of task, goes through the 'cards' array and finds where the id occurs
+  // const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
+  // const cardHandleDragEnd = (event) => {
+  //   console.log("onDragEnd", event);
+  //   // active = element currently dragging
+  //   // over = element which will be replaced, once we let go of the active element
+  //   const { active, over } = event;
+  //   // This means it's being let go at the same position it came from. If so do nothing
+  //   if (active.id === over.id) {
+  //     return;
+  //     // Else: setCards = update the 'cards' array
+  //   } else {
+  //     setCards((cards) => {
+  //       // Gets position of element before it was dragged
+  //       const originalPosition = getCardPosition(active.id);
+  //       // Gets the new position of the element, where it should be after the array is updated
+  //       const newPosition = getCardPosition(over.id);
+  //       // Here DND-Kit gives us a utility funciton that updates array based on original & new position
+  //       // array to update, original pos, new pos
+  //       return arrayMove(cards, originalPosition, newPosition);
+  //     });
+  //   }
+  // };
 
   function createTask(columnId) {
     const newTask = {
@@ -143,7 +135,7 @@ const Board = () => {
 
   function updateTask(id, content) {
     const newTasks = tasks.map((task) => {
-      // if task.id is not the task we want return original task
+      // If task.id is not the task we want return original task
       if (task.id !== id) {
         return task;
       }
@@ -218,7 +210,6 @@ const Board = () => {
 
     const activeId = active.id;
     const overId = over.id;
-
     if (activeId === overId) {
       return;
     }
@@ -232,7 +223,6 @@ const Board = () => {
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
       const overColumnIndex = columns.findIndex((col) => col.id === overId);
-
       return arrayMove(columns, activeColumnIndex, overColumnIndex);
     });
   }
@@ -295,7 +285,7 @@ const Board = () => {
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         // collisionDetection={closestCenter}
-        // announcements={defaultAnnouncements} // TODO: Try to get working
+        // announcements={defaultAnnouncements} // todo: Get working
       >
         {/* Column */}
         <div className="m-auto flex gap-2">
