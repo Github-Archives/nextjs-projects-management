@@ -4,7 +4,7 @@ import PlusIcon from "@/app/Icons/PlusIcon";
 import TrashIcon from "@/app/Icons/TrashIcon";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import TaskCard from "../TaskCard/TaskCard";
+import TaskCard from "./TaskCard";
 import PropTypes from "prop-types";
 
 function ColumnContainer(props) {

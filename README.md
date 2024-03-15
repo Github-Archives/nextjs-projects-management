@@ -43,17 +43,11 @@ npm run dev
 - [x] Create card component for tasks
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [x] Add the rest of the columns working with DND-Kit
-
-Not using this anymore →(`Board/page.jsx`*imports*→`<CardColumn>`→`<TaskCard>`→`<Card>`)
-
-- [ ] Remove: `<CardColumn>`→`<TaskCard>`→`<Card>` because the new way is just using (`Board/page.jsx`*imports*→ `ColumnContainer`→`TaskCard`)
-- [ ] Rename `ATaskCard` to `TaskCard` after removing unused `TaskCard` component
+- [x] Fix styling for Column/Cards
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
-- [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
-- [ ] Get rid of `CardColumn.css` + `TaskCard.css` & utilize Tailwind
-- [ ] Fix styling for Column/Cards
-- [ ] Get rid of paranetheses around (components) to → Components
+- [ ] Reconfigure how to `Add Task` (probably with a button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
+- [ ] Get rid of paranetheses around (components) to → Components?
 - [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [ ] GraphQL (PostGraphile?)
 - [ ] Validate emails (if we go outside of OAuth)
@@ -91,7 +85,7 @@ const style = {
 
 #### My Usage
 
-`app/(components)/Task/Task.jsx`
+`app/(components)/TaskCard.jsx`
 
 ```jsx
 const style = {
