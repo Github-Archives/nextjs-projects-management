@@ -18,8 +18,8 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import PlusIcon from "../Icons/PlusIcon";
-import ColumnContainer from "../(components)/ColumnContainer";
-import TaskCard from "../(components)/TaskCard";
+import ColumnContainer from "../components/ColumnContainer";
+import TaskCard from "../components/TaskCard";
 
 const Board = () => {
   // ! Debugging Code for dnd-kit methods (currently not connected)

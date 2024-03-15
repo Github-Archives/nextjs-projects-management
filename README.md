@@ -47,7 +47,6 @@ npm run dev
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
 - [ ] Reconfigure how to `Add Task` (probably with a button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
-- [ ] Get rid of paranetheses around (components) to → Components?
 - [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [ ] GraphQL (PostGraphile?)
 - [ ] Validate emails (if we go outside of OAuth)
@@ -85,7 +84,7 @@ const style = {
 
 #### My Usage
 
-`app/(components)/TaskCard.jsx`
+`app/components/TaskCard.jsx`
 
 ```jsx
 const style = {
