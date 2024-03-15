@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TrashIcon from "@/app/Icons/TrashIcon";
+import PropTypes from "prop-types";
 
-function ATaskCard({ task, deleteTask, updateTask }) {
+function TaskCard({ task, deleteTask, updateTask }) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -106,4 +107,13 @@ function ATaskCard({ task, deleteTask, updateTask }) {
   );
 }
 
-export default ATaskCard;
+export default TaskCard;
+
+TaskCard.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  }),
+  deleteTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+};

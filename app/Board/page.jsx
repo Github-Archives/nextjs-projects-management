@@ -5,7 +5,6 @@ import { createPortal } from "react-dom";
 
 import {
   DndContext,
-  useDndMonitor,
   closestCenter,
   useSensor,
   useSensors,
@@ -17,11 +16,10 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { arrayMove } from "@dnd-kit/sortable";
-
 import { Button } from "@/components/ui/button";
 import PlusIcon from "../Icons/PlusIcon";
-import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
-import ATaskCard from "../(components)/ATaskCard/ATaskCard";
+import ColumnContainer from "../components/ColumnContainer";
+import TaskCard from "../components/TaskCard";
 
 const Board = () => {
   // ! Debugging Code for dnd-kit methods (currently not connected)
@@ -61,8 +59,7 @@ const Board = () => {
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
 
-  console.log(columns);
-  // console.log(JSON.stringify(columns, null, 2));
+  // console.log(columns);
 
   // This is so DND-Kit works on Mobile and Keyboard
   const sensors = useSensors(
@@ -79,45 +76,6 @@ const Board = () => {
 
   // * useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
-
-  // ! Not using these underlined (collapsed) methods with new approach
-  // const addCard = (title) => {
-  //   // Takes in a String `title` parameter
-  //   // Take current `cards` array & return a new array
-  //   // Spread the old values of the `cards` &
-  //   // Add a new object with the id: cards.length + 1
-  //   // Add the `title` from the String passed in
-  //   setCards((cards) => [
-  //     ...cards,
-  //     { id: cards.length + 1, title },
-  //     // ! It will be more like below when I start updating all sections of Card via modal
-  //     //   { id: cards.length + 1, title, description, content, footer },
-  //   ]);
-  // };
-
-  // Helper function that takes id of task, goes through the 'cards' array and finds where the id occurs
-  // const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
-  // const cardHandleDragEnd = (event) => {
-  //   console.log("onDragEnd", event);
-  //   // active = element currently dragging
-  //   // over = element which will be replaced, once we let go of the active element
-  //   const { active, over } = event;
-  //   // This means it's being let go at the same position it came from. If so do nothing
-  //   if (active.id === over.id) {
-  //     return;
-  //     // Else: setCards = update the 'cards' array
-  //   } else {
-  //     setCards((cards) => {
-  //       // Gets position of element before it was dragged
-  //       const originalPosition = getCardPosition(active.id);
-  //       // Gets the new position of the element, where it should be after the array is updated
-  //       const newPosition = getCardPosition(over.id);
-  //       // Here DND-Kit gives us a utility funciton that updates array based on original & new position
-  //       // array to update, original pos, new pos
-  //       return arrayMove(cards, originalPosition, newPosition);
-  //     });
-  //   }
-  // };
 
   // Generate random number between 0-10000 for each new Column and Task id
   function generateId() {
@@ -274,7 +232,6 @@ const Board = () => {
     if (isActiveATask && isOverAColumn) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
-
         tasks[activeIndex].columnId = overId;
         // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
         return arrayMove(tasks, activeIndex, activeIndex);
@@ -338,7 +295,7 @@ const Board = () => {
               />
             )}
             {activeTask && (
-              <ATaskCard
+              <TaskCard
                 task={activeTask}
                 updateTask={updateTask}
                 deleteTask={deleteTask}

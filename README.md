@@ -43,17 +43,10 @@ npm run dev
 - [x] Create card component for tasks
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [x] Add the rest of the columns working with DND-Kit
-
-Not using this anymore →(`Board/page.jsx`*imports*→`<CardColumn>`→`<TaskCard>`→`<Card>`)
-
-- [ ] Remove: `<CardColumn>`→`<TaskCard>`→`<Card>` because the new way is just using (`Board/page.jsx`*imports*→ `ColumnContainer`→`TaskCard`)
-- [ ] Rename `ATaskCard` to `TaskCard` after removing unused `TaskCard` component
+- [x] Fix styling for Column/Cards
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
-- [ ] Reconfigure how to `Add Card` (probably with **+ Add** button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
-- [ ] Get rid of `CardColumn.css` + `TaskCard.css` & utilize Tailwind
-- [ ] Fix styling for Column/Cards
-- [ ] Get rid of paranetheses around (components) to → Components
+- [ ] Reconfigure how to `Add Task` (probably with a button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
 - [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [ ] GraphQL (PostGraphile?)
 - [ ] Validate emails (if we go outside of OAuth)
@@ -62,15 +55,6 @@ Not using this anymore →(`Board/page.jsx`*imports*→`<CardColumn>`→`<TaskCa
 
 ## Bugs 🐞
 
-- [ ] Task Number is duplicate when deleting column in a certain way then adding a new task to a new column
-      Steps to reproduce:
-  1. Add 2 new columns
-  2. Add 1 task to each column
-  3. Delete the 1st column
-  4. Add a new column (there should be 2 columns now)
-  5. Add a new task to the new 2nd column
-  6. Notice the task number is 2 instead of 3
-  7. **More Importantly!**, Notice that both columns are `Column 2`
 - [ ] Issue with dragging Tasks while on mobile. Dragging columns fixed with `touch-none`
 
 ---
@@ -100,7 +84,7 @@ const style = {
 
 #### My Usage
 
-`app/(components)/Task/Task.jsx`
+`app/components/TaskCard.jsx`
 
 ```jsx
 const style = {
