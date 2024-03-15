@@ -113,7 +113,6 @@ const Board = () => {
   } // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
 
   // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
-  // ! Create New Column
   function createNewColumn() {
     const currentColumnKey = columnKey + 1;
     setColumnKey(currentColumnKey);
@@ -125,7 +124,6 @@ const Board = () => {
     setColumns([...columns, columnToAdd]);
   }
 
-  // ! Delete Column
   function deleteColumn(id) {
     const filteredColumns = columns.filter((col) => col.id !== id);
     // console.log(
@@ -138,8 +136,7 @@ const Board = () => {
     setTasks(newTasks);
   }
 
-  // ! Is this where I"m actually suppose to fix the bug?
-  // Update card title
+  // Update Card title
   function updateColumn(id, title) {
     // console.log(`updateColumn: id=${id} title=${title}`);
     const newColumns = columns.map((col) => {
