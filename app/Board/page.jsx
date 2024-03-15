@@ -1,4 +1,5 @@
 "use client";
+
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -14,19 +15,12 @@ import {
   sortableKeyboardCoordinates,
   DragOverlay,
 } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 import { arrayMove } from "@dnd-kit/sortable";
+
 import { Button } from "@/components/ui/button";
-// import { Input } from "../(components)/Input/Input";
 import PlusIcon from "../Icons/PlusIcon";
-
-// Import SortableArea-Imports->CardColumn->TaskCard->Card
-// import { SortableArea } from "../(components)/SortableArea/SortableArea";
 import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
-
-import {
-  SortableContext,
-  // verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
 import ATaskCard from "../(components)/ATaskCard/ATaskCard";
 
 const Board = () => {
@@ -61,7 +55,9 @@ const Board = () => {
   };
 
   const [columns, setColumns] = useState([]);
+  const [columnKey, setColumnKey] = useState(0);
   const [tasks, setTasks] = useState([]);
+  const [taskKey, setTaskKey] = useState(0);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
 
@@ -75,17 +71,16 @@ const Board = () => {
         distance: 3, // 3px
       },
     }),
-    // useSensor(PointerSensor),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
 
-  // ? useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
+  // * useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
-  // ! Not using these underlined methods with new strategy
+  // ! Not using these underlined (collapsed) methods with new approach
   // const addCard = (title) => {
   //   // Takes in a String `title` parameter
   //   // Take current `cards` array & return a new array
@@ -124,18 +119,20 @@ const Board = () => {
   //   }
   // };
 
+  // Generate random number between 0-10000 for each new Column and Task id
   function generateId() {
-    // Generate random number between 0-10000 for each new Column and Task id
     return Math.floor(Math.random() * 10001);
   }
 
   // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
   function createTask(columnId) {
-    // ! IMPORTANT Is columnId What We Need!?
+    const currentTaskKey = taskKey + 1;
+    setTaskKey(currentTaskKey);
     const newTask = {
+      key: currentTaskKey,
       id: generateId(),
       columnId,
-      content: `Task ${tasks.length + 1}`,
+      content: `Task ${currentTaskKey}`,
     };
     setTasks([...tasks, newTask]);
   }
@@ -153,15 +150,19 @@ const Board = () => {
 
   function deleteTask(id) {
     const newTasks = tasks.filter((task) => task.id !== id);
+    console.log(`Filtered Tasks: ${JSON.stringify(newTasks, null, 2)}`);
     setTasks(newTasks);
   } // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
 
   // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
   // ! Create New Column
   function createNewColumn() {
+    const currentColumnKey = columnKey + 1;
+    setColumnKey(currentColumnKey);
     const columnToAdd = {
+      key: currentColumnKey,
       id: generateId(),
-      title: `Column ${columns.length + 1}`,
+      title: `Column ${currentColumnKey}`,
     };
     setColumns([...columns, columnToAdd]);
   }
@@ -169,9 +170,9 @@ const Board = () => {
   // ! Delete Column
   function deleteColumn(id) {
     const filteredColumns = columns.filter((col) => col.id !== id);
-    console.log(
-      `Filtered Columns: ${JSON.stringify(filteredColumns, null, 2)}`,
-    );
+    // console.log(
+    //   `Filtered Columns: ${JSON.stringify(filteredColumns, null, 2)}`,
+    // );
     setColumns(filteredColumns);
 
     // Delete tasks when column is deleted
@@ -182,7 +183,7 @@ const Board = () => {
   // ! Is this where I"m actually suppose to fix the bug?
   // Update card title
   function updateColumn(id, title) {
-    console.log(`updateColumn: id=${id} title=${title}`);
+    // console.log(`updateColumn: id=${id} title=${title}`);
     const newColumns = columns.map((col) => {
       if (col.id !== id) {
         return col;
@@ -193,7 +194,7 @@ const Board = () => {
   } // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
 
   function onDragStart(event) {
-    console.log("onDragStart", event);
+    // console.log("onDragStart", event);
     if (event.active.data.current?.type === "Column") {
       setActiveColumn(event.active.data.current.column);
       return;
@@ -224,7 +225,7 @@ const Board = () => {
     if (!isActiveAColumn) {
       return;
     }
-    console.log("DRAG END");
+    // console.log("DRAG END");
 
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
@@ -275,7 +276,7 @@ const Board = () => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
 
         tasks[activeIndex].columnId = overId;
-        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+        // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
         return arrayMove(tasks, activeIndex, activeIndex);
       });
     }

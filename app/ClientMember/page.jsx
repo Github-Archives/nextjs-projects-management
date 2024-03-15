@@ -6,6 +6,7 @@ import getData from "../utils/database";
 const Member = () => {
   const [rowResponse, setRowResponse] = useState({});
 
+  // Todo: I think there's a better way of handling fetching data from db that is NOT useEffect
   useEffect(() => {
     async function fetchData() {
       try {
