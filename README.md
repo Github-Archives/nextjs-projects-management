@@ -1,15 +1,4 @@
-Video tutorial that assisted:
-https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
-
-# Temp notes...
-
-Video tutorial I'm currently working off of as of March 8 video @~35min (Edit column title):
-Right now I can:
-
-- Add a new column
-- Delete a columnn- Drag/Rearrange columns
-- Currently working on adding ability to Edit column titles (currently at 33:33)
-  https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s
+# Temp notes
 
 Official Docs for Multiple Containers:
 https://docs.dndkit.com/presets/sortable#multiple-containers
@@ -65,7 +54,8 @@ npm run dev
 - `app/utils/authUtils/returnUserStatus.js` is able to return if the user is logged in. I want this recognition to trigger a `Login/Register` button to appear where the top-right avatar is when user is not logged in.
 
 Taken from offical docs - [`getting-started`](https://docs.dndkit.com/introduction/getting-started)
-I have not implemented Draggable & Droppable components the way that the official docs suggest. Instead I followed guidlines from [this video](https://www.youtube.com/watch?v=dL5SOdgMbRY)
+
+- I have not implemented Draggable & Droppable components the way that the official docs suggest. Instead I followed guidlines from [this video](https://www.youtube.com/watch?v=RG-3R6Pu_Ik&t=1s)
 
 ---
 
@@ -88,8 +78,8 @@ const style = {
 
 ```jsx
 const style = {
-  transition, // <- from youtube tutorial
-  transform: CSS.Transform.toString(transform), // <- from youtube tutorial
+  transition,
+  transform: CSS.Transform.toString(transform),
   // transform: CSS.Translate.toString(transform), // <- only line from notes/official tips
 };
 ```
