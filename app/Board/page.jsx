@@ -1,4 +1,5 @@
 "use client";
+
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -14,19 +15,12 @@ import {
   sortableKeyboardCoordinates,
   DragOverlay,
 } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 import { arrayMove } from "@dnd-kit/sortable";
+
 import { Button } from "@/components/ui/button";
-import { Input } from "../(components)/Input/Input";
 import PlusIcon from "../Icons/PlusIcon";
-
-// Import SortableArea-Imports->CardColumn->TaskCard->Card
-import { SortableArea } from "../(components)/SortableArea/SortableArea";
 import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
-
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
 import ATaskCard from "../(components)/ATaskCard/ATaskCard";
 
 const Board = () => {
@@ -61,101 +55,94 @@ const Board = () => {
   };
 
   const [columns, setColumns] = useState([]);
+  const [columnKey, setColumnKey] = useState(0);
   const [tasks, setTasks] = useState([]);
+  const [taskKey, setTaskKey] = useState(0);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
 
   console.log(columns);
   // console.log(JSON.stringify(columns, null, 2));
 
+  // This is so DND-Kit works on Mobile and Keyboard
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 3, // 3px
       },
     }),
-    // useSensor(PointerSensor),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
 
-  // // This is so DND-Kit works on Mobile and Keyboard
-  // const sensors = useSensors(
-  //   useSensor(PointerSensor),
-  //   useSensor(TouchSensor),
-  //   useSensor(KeyboardSensor, {
-  //     coordinateGetter: sortableKeyboardCoordinates,
-  //   }),
-  // );
-
-  // ? useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
+  // * useMemo -> is a React hook that memorizes the output of a function and reuses it when the inputs haven't changed.
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
-  // ! Not using these underlined methods with new strategy
-  const addCard = (title) => {
-    // Takes in a String `title` parameter
-    // Take current `cards` array & return a new array
-    // Spread the old values of the `cards` &
-    // Add a new object with the id: cards.length + 1
-    // Add the `title` from the String passed in
-    setCards((cards) => [
-      ...cards,
-      { id: cards.length + 1, title },
-      // ! It will be more like below when I start updating all sections of Card via modal
-      //   { id: cards.length + 1, title, description, content, footer },
-    ]);
-  };
+  // ! Not using these underlined (collapsed) methods with new approach
+  // const addCard = (title) => {
+  //   // Takes in a String `title` parameter
+  //   // Take current `cards` array & return a new array
+  //   // Spread the old values of the `cards` &
+  //   // Add a new object with the id: cards.length + 1
+  //   // Add the `title` from the String passed in
+  //   setCards((cards) => [
+  //     ...cards,
+  //     { id: cards.length + 1, title },
+  //     // ! It will be more like below when I start updating all sections of Card via modal
+  //     //   { id: cards.length + 1, title, description, content, footer },
+  //   ]);
+  // };
 
   // Helper function that takes id of task, goes through the 'cards' array and finds where the id occurs
-  const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
+  // const getCardPosition = (id) => cards.findIndex((card) => card.id === id);
+  // const cardHandleDragEnd = (event) => {
+  //   console.log("onDragEnd", event);
+  //   // active = element currently dragging
+  //   // over = element which will be replaced, once we let go of the active element
+  //   const { active, over } = event;
+  //   // This means it's being let go at the same position it came from. If so do nothing
+  //   if (active.id === over.id) {
+  //     return;
+  //     // Else: setCards = update the 'cards' array
+  //   } else {
+  //     setCards((cards) => {
+  //       // Gets position of element before it was dragged
+  //       const originalPosition = getCardPosition(active.id);
+  //       // Gets the new position of the element, where it should be after the array is updated
+  //       const newPosition = getCardPosition(over.id);
+  //       // Here DND-Kit gives us a utility funciton that updates array based on original & new position
+  //       // array to update, original pos, new pos
+  //       return arrayMove(cards, originalPosition, newPosition);
+  //     });
+  //   }
+  // };
 
-  const cardHandleDragEnd = (event) => {
-    console.log("onDragEnd", event);
-    // active = element currently dragging
-    // over = element which will be replaced, once we let go of the active element
-    const { active, over } = event;
-    // This means it's being let go at the same position it came from. If so do nothing
-    if (active.id === over.id) {
-      return;
-      // Else: setCards = update the 'cards' array
-    } else {
-      setCards((cards) => {
-        // Gets position of element before it was dragged
-        const originalPosition = getCardPosition(active.id);
-        // Gets the new position of the element, where it should be after the array is updated
-        const newPosition = getCardPosition(over.id);
-        // Here DND-Kit gives us a utility funciton that updates array based on original & new position
-        // array to update, original pos, new pos
-        return arrayMove(cards, originalPosition, newPosition);
-      });
-    }
-  };
+  // Generate random number between 0-10000 for each new Column and Task id
+  function generateId() {
+    return Math.floor(Math.random() * 10001);
+  }
 
-  // ! Legacy code from previous strategy. Experiment to see if it will still work
-  // This is so DND-Kit works on Mobile and Keyboard
-  // const sensors = useSensors(
-  //   useSensor(PointerSensor),
-  //   useSensor(TouchSensor),
-  //   useSensor(KeyboardSensor, {
-  //     coordinateGetter: sortableKeyboardCoordinates,
-  //   }),
-  // );
-
+  // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
   function createTask(columnId) {
+    const currentTaskKey = taskKey + 1;
+    setTaskKey(currentTaskKey);
     const newTask = {
+      key: currentTaskKey,
       id: generateId(),
       columnId,
-      content: `Task ${tasks.length + 1}`,
+      content: `Task ${currentTaskKey}`,
     };
     setTasks([...tasks, newTask]);
   }
 
   function updateTask(id, content) {
     const newTasks = tasks.map((task) => {
-      // if task.id is not the task we want return original task
-      if (task.id !== id) return task;
+      // If task.id is not the task we want return original task
+      if (task.id !== id) {
+        return task;
+      }
       return { ...task, content };
     });
     setTasks(newTasks);
@@ -163,27 +150,29 @@ const Board = () => {
 
   function deleteTask(id) {
     const newTasks = tasks.filter((task) => task.id !== id);
+    console.log(`Filtered Tasks: ${JSON.stringify(newTasks, null, 2)}`);
     setTasks(newTasks);
-  }
+  } // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
 
+  // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
+  // ! Create New Column
   function createNewColumn() {
+    const currentColumnKey = columnKey + 1;
+    setColumnKey(currentColumnKey);
     const columnToAdd = {
+      key: currentColumnKey,
       id: generateId(),
-      title: `Column ${columns.length + 1}`,
+      title: `Column ${currentColumnKey}`,
     };
     setColumns([...columns, columnToAdd]);
   }
 
-  function generateId() {
-    // Generate a random number between 0 and 10000
-    return Math.floor(Math.random() * 10001);
-  }
-
+  // ! Delete Column
   function deleteColumn(id) {
     const filteredColumns = columns.filter((col) => col.id !== id);
-    console.log(
-      `Filtered Columns: ${JSON.stringify(filteredColumns, null, 2)}`,
-    );
+    // console.log(
+    //   `Filtered Columns: ${JSON.stringify(filteredColumns, null, 2)}`,
+    // );
     setColumns(filteredColumns);
 
     // Delete tasks when column is deleted
@@ -191,9 +180,10 @@ const Board = () => {
     setTasks(newTasks);
   }
 
+  // ! Is this where I"m actually suppose to fix the bug?
   // Update card title
   function updateColumn(id, title) {
-    console.log(`updateColumn: id=${id} title=${title}`);
+    // console.log(`updateColumn: id=${id} title=${title}`);
     const newColumns = columns.map((col) => {
       if (col.id !== id) {
         return col;
@@ -201,10 +191,10 @@ const Board = () => {
       return { ...col, title };
     });
     setColumns(newColumns);
-  }
+  } // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
 
   function onDragStart(event) {
-    console.log("onDragStart", event);
+    // console.log("onDragStart", event);
     if (event.active.data.current?.type === "Column") {
       setActiveColumn(event.active.data.current.column);
       return;
@@ -221,39 +211,48 @@ const Board = () => {
     setActiveTask(null);
 
     const { active, over } = event;
-    if (!over) return;
+    if (!over) {
+      return;
+    }
 
     const activeId = active.id;
     const overId = over.id;
-
-    if (activeId === overId) return;
+    if (activeId === overId) {
+      return;
+    }
 
     const isActiveAColumn = active.data.current?.type === "Column";
-    if (!isActiveAColumn) return;
-
-    console.log("DRAG END");
+    if (!isActiveAColumn) {
+      return;
+    }
+    // console.log("DRAG END");
 
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
       const overColumnIndex = columns.findIndex((col) => col.id === overId);
-
       return arrayMove(columns, activeColumnIndex, overColumnIndex);
     });
   }
 
   function onDragOver(event) {
     const { active, over } = event;
-    if (!over) return;
+    if (!over) {
+      return;
+    }
 
     const activeId = active.id;
     const overId = over.id;
 
-    if (activeId === overId) return;
+    if (activeId === overId) {
+      return;
+    }
 
     const isActiveATask = active.data.current?.type === "Task";
     const isOverATask = over.data.current?.type === "Task";
 
-    if (!isActiveATask) return;
+    if (!isActiveATask) {
+      return;
+    }
 
     // I'm dropping a Task over another Task
     if (isActiveATask && isOverATask) {
@@ -277,7 +276,7 @@ const Board = () => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
 
         tasks[activeIndex].columnId = overId;
-        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+        // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
         return arrayMove(tasks, activeIndex, activeIndex);
       });
     }
@@ -293,7 +292,7 @@ const Board = () => {
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         // collisionDetection={closestCenter}
-        // announcements={defaultAnnouncements} // TODO: Try to get working
+        // announcements={defaultAnnouncements} // todo: Get working
       >
         {/* Column */}
         <div className="m-auto flex gap-2">
@@ -319,9 +318,9 @@ const Board = () => {
           </Button>
         </div>
 
-        {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component
+        {/* !! POTENTIAL FUTURE IMPROVEMENT: Create a <DragOverlay> for each component..
         This new component might be called <ColumnDragOverlay> that does not require all of the properties that our <ColumnContainer> requires because the DragOverlay is not interactive. For example: deleteColumn,updateColumn,createTask,deleteTask,updateTask are not required. I believe because you don't need to use these properties while the component is in the middle of being dragged.
-        */}
+      */}
         {/* Overlay of ColumnContainer while being dragged */}
         {createPortal(
           <DragOverlay>
