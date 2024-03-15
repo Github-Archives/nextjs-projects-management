@@ -139,7 +139,6 @@ function ColumnContainer(props) {
 
 export default ColumnContainer;
 
-// PropTypes
 ColumnContainer.propTypes = {
   column: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -152,7 +151,6 @@ ColumnContainer.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
-      // Include other task properties here
     }),
   ).isRequired,
   deleteTask: PropTypes.func.isRequired,

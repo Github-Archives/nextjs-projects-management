@@ -62,15 +62,6 @@ Not using this anymore →(`Board/page.jsx`*imports*→`<CardColumn>`→`<TaskCa
 
 ## Bugs 🐞
 
-- [ ] Task Number is duplicate when deleting column in a certain way then adding a new task to a new column
-      Steps to reproduce:
-  1. Add 2 new columns
-  2. Add 1 task to each column
-  3. Delete the 1st column
-  4. Add a new column (there should be 2 columns now)
-  5. Add a new task to the new 2nd column
-  6. Notice the task number is 2 instead of 3
-  7. **More Importantly!**, Notice that both columns are `Column 2`
 - [ ] Issue with dragging Tasks while on mobile. Dragging columns fixed with `touch-none`
 
 ---
