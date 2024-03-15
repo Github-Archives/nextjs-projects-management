@@ -1,7 +1,8 @@
-// ! This is a test file (delete)
+"use server";
+
+// ! This is a test file (delete after finished testing functionality)
 // ? At the time I wanted a place-holder for the top-right avatar when user isn't logged in so spacing stays consistent
 
-"use server";
 import { auth, currentUser } from "@clerk/nextjs";
 
 export default async function CheckIfLoggedIn() {

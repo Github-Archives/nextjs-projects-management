@@ -4,8 +4,7 @@ import PlusIcon from "@/app/Icons/PlusIcon";
 import TrashIcon from "@/app/Icons/TrashIcon";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import ATaskCard from "../ATaskCard/ATaskCard";
-
+import TaskCard from "../TaskCard/TaskCard";
 import PropTypes from "prop-types";
 
 function ColumnContainer(props) {
@@ -114,7 +113,7 @@ function ColumnContainer(props) {
       <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
-            <ATaskCard
+            <TaskCard
               key={task.id}
               task={task}
               deleteTask={deleteTask}

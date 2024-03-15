@@ -19,7 +19,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import PlusIcon from "../Icons/PlusIcon";
 import ColumnContainer from "../(components)/ColumnContainer/ColumnContainer";
-import ATaskCard from "../(components)/ATaskCard/ATaskCard";
+import TaskCard from "../(components)/TaskCard/TaskCard";
 
 const Board = () => {
   // ! Debugging Code for dnd-kit methods (currently not connected)
@@ -232,7 +232,6 @@ const Board = () => {
     if (isActiveATask && isOverAColumn) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
-
         tasks[activeIndex].columnId = overId;
         // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
         return arrayMove(tasks, activeIndex, activeIndex);
@@ -296,7 +295,7 @@ const Board = () => {
               />
             )}
             {activeTask && (
-              <ATaskCard
+              <TaskCard
                 task={activeTask}
                 updateTask={updateTask}
                 deleteTask={deleteTask}
@@ -311,7 +310,3 @@ const Board = () => {
 };
 
 export default Board;
-
-// page.propTypes = {
-//   // Placeholder for the prop types
-// };
