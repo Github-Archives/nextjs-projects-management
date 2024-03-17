@@ -95,7 +95,9 @@ function ColumnContainer(props) {
                 setEditMode(false);
               }}
               onKeyDown={(e) => {
-                if (e.key !== "Enter") return;
+                if (e.key !== "Enter") {
+                  return;
+                }
                 setEditMode(false);
               }}
             />

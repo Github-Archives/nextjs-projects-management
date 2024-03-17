@@ -37,7 +37,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
 
   // Returns TaskCard slot where being dragged from, then dragged to
   if (isDragging) {
-    // bg-mainBackgroundColor
     return (
       <div
         className="task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl border-2 border-rose-500 bg-green-600 p-2.5 text-left opacity-50"
@@ -111,7 +110,7 @@ export default TaskCard;
 
 TaskCard.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
   }),
   deleteTask: PropTypes.func.isRequired,
