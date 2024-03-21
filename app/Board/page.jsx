@@ -2,7 +2,16 @@
 
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-
+// * NEW... Literally the only thing added so far to this commit
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+// * ...New
 import {
   DndContext,
   closestCenter,
@@ -238,6 +247,21 @@ const Board = () => {
 
   return (
     <div>
+      {/* * NEW... Literally the only thing added so far to this commit */}
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      {/* ...New  */}
+
       <p className="text-4xl">Task Board</p>
       {/* Returns the closest rectangles from an array of rectangles to the center of a given. Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked (collisionDetection unused rn)*/}
       <DndContext
