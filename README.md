@@ -23,6 +23,7 @@ npm run dev
 
 ## Todo
 
+- [x] Add Jest and React Testing Library and start adding tests
 - [x] OAuth Provider setup for Github and Google
 - [x] Role-based authentication setup for both server rendered pages and client rendered pages
 - [x] Admin Role-based authentication
