@@ -24,6 +24,7 @@ npm run dev
 ## Todo
 
 - [x] Add Jest and React Testing Library and start adding tests
+- [x] Also make a simple API call using Fetch, or **Axios**. Axios uses **AJAX** to communicate with the "backend" API
 - [x] OAuth Provider setup for Github and Google
 - [x] Role-based authentication setup for both server rendered pages and client rendered pages
 - [x] Admin Role-based authentication
@@ -34,6 +35,7 @@ npm run dev
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [x] Add the rest of the columns working with DND-Kit
 - [x] Fix styling for Column/Cards
+- [ ] Take Clerk out of Dev mode
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
 - [ ] Reconfigure how to `Add Task` (probably with a button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
