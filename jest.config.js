@@ -1,6 +1,6 @@
 module.exports = {
   testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
-  setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
+  setupFilesAfterEnv: ["./setupTests.js"], // Relative path to setupTests.js
   transform: {
     "^.+\\.jsx?$": "babel-jest",
   },
