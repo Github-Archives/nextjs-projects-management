@@ -2,6 +2,13 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import TaskCard from "./TaskCard"; // Import the component
 
+// Mock the TrashIcon component
+// jest.mock("@/app/Icons/TrashIcon", () => {
+//   const TrashIconMock = () => <div data-testid="trash-icon-mock"></div>;
+//   TrashIconMock.displayName = "TrashIconMock";
+//   return TrashIconMock;
+// });
+
 describe("TaskCard", () => {
   test("renders task title and description", () => {
     // Define test data

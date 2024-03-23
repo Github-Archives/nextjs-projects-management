@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import TrashIcon from "@/app/Icons/TrashIcon";
+// import TrashIcon from "@/app/Icons/TrashIcon";
 import PropTypes from "prop-types";
 
 function TaskCard({ task, deleteTask, updateTask }) {
@@ -99,7 +99,8 @@ function TaskCard({ task, deleteTask, updateTask }) {
             deleteTask(task.id);
           }}
         >
-          <TrashIcon />
+          {/* <TrashIcon /> */}
+          <button>Delete</button>
         </button>
       )}
     </div>
