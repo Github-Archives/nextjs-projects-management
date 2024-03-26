@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import PropTypes from "prop-types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -95,8 +96,7 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
                       />
                     </FormControl>
                     <FormDescription>
-                      You can <span>@mention</span> other users and
-                      organizations.
+                      This is <span>FormDescription</span> Placeholder Text.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -134,3 +134,14 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
 }
 
 export default DialogModal;
+
+DialogModal.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    content: PropTypes.string.isRequired,
+  }),
+  deleteTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
