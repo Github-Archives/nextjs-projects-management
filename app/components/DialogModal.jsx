@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import PropTypes from "prop-types";
@@ -50,9 +49,6 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
   });
 
   function onSubmit(data) {
-    // console.log(
-    //   `onSubmit(data) Pressed. data: ${JSON.stringify(data, null, 2)}`,
-    // );
     setContentText(data.textContent);
     updateTask(task.id, contentText);
     toast({
@@ -65,18 +61,23 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
     });
   }
 
-  // This may be redundant
+  // ? Consider using "useCallback" instead of useEffect if `updateTask` is a function that changes frequently, it could lead to unnecessary renders. "useCallback" will prevent change on every render and ensure `updateTask` has a stable identity across renders, not triggering unncesary effects or renders.
   useEffect(() => {
     updateTask(task.id, contentText);
-  }, [contentText]);
+  }, [contentText, task.id]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* <DialogTrigger>{task.content}</DialogTrigger> */}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>{task.content}</DialogDescription>
+          <DialogTitle>DialogTitle: Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
+            {/* This should be just the TaskCard's Title */}
+            {/* THis is a duplicate */}
+            DialogDescription: {task.content}
+          </DialogDescription>
+
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -87,16 +88,17 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
                 name="textContent"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Text Context</FormLabel>
+                    <FormLabel>FormLabel: Text Context</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Enter Task Description Here"
-                        className="resize-none text-gray-900"
+                        className="the-main-text-area resize-none text-gray-900"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      This is <span>FormDescription</span> Placeholder Text.
+                      FormDescription: This is <span>FormDescription</span>{" "}
+                      Placeholder Text.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -105,9 +107,14 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
               <Button type="submit">Submit</Button>
             </form>
           </Form>
-          <Button onClick={onClose}>Cancel</Button>
-          <DialogDescription>{contentText}</DialogDescription>
-          <Button
+
+          <DialogDescription>
+            {/* This should be  */}
+            {/* THis is a duplicate */}
+            Dialog Description: {contentText}
+          </DialogDescription>
+          {/* Enable Toast button in form for testing */}
+          {/* <Button
             onClick={() => {
               toast({
                 title: "You submitted the following values:",
@@ -122,7 +129,7 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
             }}
           >
             Show Toast
-          </Button>
+          </Button> */}
         </DialogHeader>
         <DialogFooter>
           <Button onClick={() => deleteTask(task.id)}>Delete</Button>
