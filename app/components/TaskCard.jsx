@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import DialogModal from "./DialogModal";
 import TrashIcon from "@/app/Icons/TrashIcon";
 import PropTypes from "prop-types";
 
 function TaskCard({ task, deleteTask, updateTask }) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Make tasks sortable
   const {
@@ -30,6 +32,15 @@ function TaskCard({ task, deleteTask, updateTask }) {
     transform: CSS.Translate.toString(transform),
   };
 
+  // New
+  const handleTaskClick = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
     setMouseIsOver(false);
@@ -46,18 +57,20 @@ function TaskCard({ task, deleteTask, updateTask }) {
     );
   }
 
+  // * We probably won't need editMode here if editing will happen in <DialogModal>
   // Returned when IN EDIT MODE
   if (editMode) {
     return (
       <div
-        className="relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-blue-900 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
+        className="task-editable relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-blue-900 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
         ref={setNodeRef}
         style={style}
         {...attributes}
         {...listeners}
       >
+        {/* I think <textarea/> needs to move to DialogModal.jsx*/}
         <textarea
-          className="h-[90%] w-full resize-none rounded border-none bg-transparent text-white focus:outline-none"
+          className="text-area h-[90%] w-full resize-none rounded border-none bg-transparent text-white focus:outline-none"
           value={task.content}
           autoFocus
           placeholder="Task content here. Press Shift+Enter to Submit"
@@ -75,34 +88,44 @@ function TaskCard({ task, deleteTask, updateTask }) {
 
   // This is returned when NOT IN EDIT MODE (Standard)
   return (
-    <div
-      className="task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-red-800 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      onClick={toggleEditMode}
-      onMouseEnter={() => {
-        setMouseIsOver(true);
-      }}
-      onMouseLeave={() => {
-        setMouseIsOver(false);
-      }}
-    >
-      <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-        {task.content}
-      </p>
-      {mouseIsOver && (
-        <button
-          className="top-1/2-translate-y-1/2 absolute right-4 rounded bg-columnBackgroundColor stroke-white p-2 opacity-60 hover:opacity-100"
-          onClick={() => {
-            deleteTask(task.id);
-          }}
-        >
-          <TrashIcon />
-        </button>
-      )}
-    </div>
+    <>
+      <div
+        className="task-static relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-red-800 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        onClick={handleTaskClick}
+        onMouseEnter={() => {
+          setMouseIsOver(true);
+        }}
+        onMouseLeave={() => {
+          setMouseIsOver(false);
+        }}
+      >
+        <p className="task-content my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
+          {task.content}
+        </p>
+        {mouseIsOver && (
+          <button
+            className="delete-task-button top-1/2-translate-y-1/2 absolute right-4 rounded bg-columnBackgroundColor stroke-white p-2 opacity-60 hover:opacity-100"
+            onClick={() => {
+              deleteTask(task.id);
+            }}
+          >
+            <TrashIcon />
+          </button>
+        )}
+      </div>
+      {/* This works for now */}
+      <DialogModal
+        task={task}
+        deleteTask={deleteTask}
+        updateTask={updateTask}
+        isOpen={isDialogOpen}
+        onClose={handleDialogClose}
+      />
+    </>
   );
 }
 

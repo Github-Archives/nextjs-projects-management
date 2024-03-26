@@ -105,14 +105,14 @@ function ColumnContainer(props) {
         </div>
       </div>
       <Button
-        className="hover:ring-2 hover:ring-inset hover:ring-rose-500"
+        className="delete-column-button hover:ring-2 hover:ring-inset hover:ring-rose-500"
         onClick={() => deleteColumn(column.id)}
       >
         <TrashIcon />
         Delete
       </Button>
       {/* Column task container */}
-      <div className="flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
+      <div className="column-container flex flex-grow flex-col gap-4 overflow-y-auto overflow-x-hidden p-2">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard
@@ -126,7 +126,7 @@ function ColumnContainer(props) {
       </div>
       {/* Add Task Button */}
       <Button
-        className="flex items-center gap-2 rounded-md border-2 border-columnBackgroundColor border-x-columnBackgroundColor p-4 hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
+        className="add-task-button flex items-center gap-2 rounded-md border-2 border-columnBackgroundColor border-x-columnBackgroundColor p-4 hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
         onClick={() => {
           createTask(column.id);
         }}

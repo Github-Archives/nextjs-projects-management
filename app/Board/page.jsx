@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-// * NEW... Literally the only thing added so far to this commit
 import {
   Dialog,
   DialogContent,
@@ -11,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-// * ...New
 import {
   DndContext,
   closestCenter,
@@ -31,7 +29,7 @@ import ColumnContainer from "../components/ColumnContainer";
 import TaskCard from "../components/TaskCard";
 
 const Board = () => {
-  // ! Debugging Code for dnd-kit methods (currently not connected)
+  // * Debugging functions for dnd-kit methods (currently not used)
   const defaultAnnouncements = {
     onDragStart(id) {
       console.log(`Picked up draggable item ${id}.`);
@@ -43,7 +41,6 @@ const Board = () => {
         );
         return;
       }
-
       console.log(`Draggable item ${id} is no longer over a droppable area.`);
     },
     onDragEnd(id, overId) {
@@ -53,7 +50,6 @@ const Board = () => {
         );
         return;
       }
-
       console.log(`Draggable item ${id} was dropped.`);
     },
     onDragCancel(id) {
@@ -113,6 +109,7 @@ const Board = () => {
       return { ...task, content };
     });
     setTasks(newTasks);
+    console.log(`Updated Tasks: ${JSON.stringify(newTasks, null, 2)}`);
   }
 
   function deleteTask(id) {
