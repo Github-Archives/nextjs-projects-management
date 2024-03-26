@@ -3,16 +3,8 @@
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   DndContext,
-  closestCenter,
+  closestCenter, // todo: confirm if this is needed
   useSensor,
   useSensors,
   PointerSensor,
@@ -63,7 +55,6 @@ const Board = () => {
   const [taskKey, setTaskKey] = useState(0);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
-
   // console.log(columns);
 
   // This is so DND-Kit works on Mobile and Keyboard
@@ -116,7 +107,8 @@ const Board = () => {
     const newTasks = tasks.filter((task) => task.id !== id);
     console.log(`Filtered Tasks: ${JSON.stringify(newTasks, null, 2)}`);
     setTasks(newTasks);
-  } // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
+  }
+  // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
 
   // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
   function createNewColumn() {
@@ -152,7 +144,8 @@ const Board = () => {
       return { ...col, title };
     });
     setColumns(newColumns);
-  } // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
+  }
+  // *--*--*--*--*--*--*--*--*--* COLUMN *--*--*--*--*--*--*--*--* //
 
   function onDragStart(event) {
     // console.log("onDragStart", event);
@@ -244,23 +237,7 @@ const Board = () => {
 
   return (
     <div>
-      {/* * NEW... Literally the only thing added so far to this commit */}
-      <Dialog>
-        <DialogTrigger>Open</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-      {/* ...New  */}
-
       <p className="text-4xl">Task Board</p>
-      {/* Returns the closest rectangles from an array of rectangles to the center of a given. Whenever we drag an element into a certain area collisionDetection decides which area it should go towards when mouse is unclicked (collisionDetection unused rn)*/}
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
