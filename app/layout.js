@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import Nav from "./components/Nav";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 
 export const metadata = {
@@ -14,6 +15,8 @@ export default function RootLayout({ children }) {
         <body>
           <Nav />
           <div>{children}</div>
+          {/* <Toaster> gives entire project ability to have a Toast */}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

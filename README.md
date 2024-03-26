@@ -33,6 +33,7 @@ npm run dev
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [x] Add the rest of the columns working with DND-Kit
 - [x] Fix styling for Column/Cards
+- [ ] Task Text Content only being updated on clicking Submit in TaskCard modal twice.
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
 - [ ] Reconfigure how to `Add Task` (probably with a button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
