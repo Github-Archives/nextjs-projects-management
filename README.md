@@ -35,6 +35,7 @@ npm run dev
 - [x] Fix styling for Column/Cards
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
+- [ ] TaskCards could have Task/Story/Bug Feature types
 - [ ] Reconfigure how to `Add Task` (probably with a button opening a [modal](https://ui.shadcn.com/docs/components/dialog))
 - [ ] Add Shadcn UI [Dark Mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [ ] GraphQL (PostGraphile?)
