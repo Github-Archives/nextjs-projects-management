@@ -65,6 +65,8 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
   // ? Consider using "useCallback" instead of useEffect if `updateTask` is a function that changes frequently, it could lead to unnecessary renders. "useCallback" will prevent change on every render and ensure `updateTask` has a stable identity across renders, not triggering unncesary effects or renders.
   useEffect(() => {
     updateTask(task.id, contentText);
+    console.log(`contentText: ${contentText}`);
+    console.log(`contentText: ${contentText}`);
   }, [contentText, task.id]);
 
   return (

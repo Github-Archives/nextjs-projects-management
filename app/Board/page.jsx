@@ -100,7 +100,7 @@ const Board = () => {
       return { ...task, content };
     });
     setTasks(newTasks);
-    console.log(`Updated Tasks: ${JSON.stringify(newTasks, null, 2)}`);
+    // console.log(`Updated Tasks: ${JSON.stringify(newTasks, null, 2)}`);
   }
 
   function deleteTask(id) {
