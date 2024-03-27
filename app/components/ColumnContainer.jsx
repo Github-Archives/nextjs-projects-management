@@ -118,8 +118,8 @@ function ColumnContainer(props) {
             <TaskCard
               key={task.id}
               task={task}
-              deleteTask={deleteTask}
               updateTask={updateTask}
+              deleteTask={deleteTask}
             />
           ))}
         </SortableContext>

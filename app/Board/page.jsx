@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import {
   DndContext,
@@ -51,10 +51,24 @@ const Board = () => {
 
   const [columns, setColumns] = useState([]);
   const [columnKey, setColumnKey] = useState(0);
-  const [tasks, setTasks] = useState([]);
-  const [taskKey, setTaskKey] = useState(0);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
+
+  const [tasks, setTasks] = useState([]);
+  const [taskKey, setTaskKey] = useState(0);
+
+  // ! ...............
+  const [projectName, setProjectName] = useState("NPM");
+  const [taskName, setTaskName] = useState(0);
+  const [taskSummary, setTaskSummary] = useState("Default Task Summary");
+  const [taskType, sendTaskType] = useState("Bug");
+  const [taskStatus, setTasketStatus] = useState("To Do");
+  const [taskDescription, setTaskDescription] = useState(
+    "Default Task Description",
+  );
+  const [taskStoryPoints, setTaskStoryPoints] = useState(0);
+  // ! ........................
+
   // console.log(columns);
 
   // This is so DND-Kit works on Mobile and Keyboard
@@ -78,6 +92,12 @@ const Board = () => {
     return Math.floor(Math.random() * 10001);
   }
 
+  // $#$$#$$#$$#$$#$$#$$#$$#$$#$$# useEffect(() => {}) #$$#$$#$$#$$#$$#$$#$$#$$#$  //
+  useEffect(() => {
+    console.log(`activeTask: ${JSON.stringify(activeTask, null, 2)}`);
+  }, [activeTask]);
+  // $#$$#$$#$$#$$#$$#$$#$$#$$#$$# useEffect(() => {}) #$$#$$#$$#$$#$$#$$#$$#$$#$  //
+
   // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
   function createTask(columnId) {
     const currentTaskKey = taskKey + 1;
@@ -86,18 +106,24 @@ const Board = () => {
       key: currentTaskKey,
       id: generateId(),
       columnId,
-      content: `Task ${currentTaskKey}`,
+      taskContent: `Task (${currentTaskKey})`,
+      taskName: `${projectName}-${currentTaskKey}`,
+      taskSummary: `${taskSummary}`,
+      taskType: `${taskType}`,
+      taskStatus: `${taskStatus}`,
+      taskDescription: `${taskDescription}`,
+      taskStoryPoints: `${taskStoryPoints}`,
     };
     setTasks([...tasks, newTask]);
   }
 
-  function updateTask(id, content) {
+  function updateTask(id, taskContent) {
     const newTasks = tasks.map((task) => {
       // If task.id is not the task we want return original task
       if (task.id !== id) {
         return task;
       }
-      return { ...task, content };
+      return { ...task, taskContent };
     });
     setTasks(newTasks);
     // console.log(`Updated Tasks: ${JSON.stringify(newTasks, null, 2)}`);
@@ -105,7 +131,7 @@ const Board = () => {
 
   function deleteTask(id) {
     const newTasks = tasks.filter((task) => task.id !== id);
-    console.log(`Filtered Tasks: ${JSON.stringify(newTasks, null, 2)}`);
+    // console.log(`Filtered Tasks: ${JSON.stringify(newTasks, null, 2)}`);
     setTasks(newTasks);
   }
   // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
@@ -290,7 +316,9 @@ const Board = () => {
               />
             )}
             {activeTask && (
+              // I wonder how important it is to include every single <TaskCard> property here when it's just being dragged... not edited.
               <TaskCard
+                key={activeTask.id}
                 task={activeTask}
                 updateTask={updateTask}
                 deleteTask={deleteTask}

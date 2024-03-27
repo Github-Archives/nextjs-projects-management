@@ -19,7 +19,14 @@ function TaskCard({ task, deleteTask, updateTask }) {
     transition,
     isDragging,
   } = useSortable({
+    // ? See what happens if you get rid of these New destructured props like key, taskSummary, taskType, taskStatus, etc.
+    key: task.id, // ! .........
     id: task.id,
+    taskSummary: task.taskSummary, // ! .........
+    taskType: task.taskType, // ! .........
+    taskStatus: task.taskStatus, // ! .........
+    taskDescription: task.taskDescription, // ! .........
+    taskStoryPoints: task.taskStoryPoints, // ! .........
     data: {
       type: "Task",
       task,
@@ -32,7 +39,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
     transform: CSS.Translate.toString(transform),
   };
 
-  // New
   const handleTaskClick = () => {
     setIsDialogOpen(true);
   };
@@ -71,7 +77,7 @@ function TaskCard({ task, deleteTask, updateTask }) {
         {/* I think <textarea/> needs to move to DialogModal.jsx*/}
         <textarea
           className="text-area h-[90%] w-full resize-none rounded border-none bg-transparent text-white focus:outline-none"
-          value={task.content}
+          value={task.taskDescription}
           autoFocus
           placeholder="Task content here. Press Shift+Enter to Submit"
           onBlur={toggleEditMode}
@@ -104,7 +110,7 @@ function TaskCard({ task, deleteTask, updateTask }) {
         }}
       >
         <p className="task-content my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-          {task.content}
+          {task.taskDescription}
         </p>
         {mouseIsOver && (
           <button

@@ -39,7 +39,7 @@ const FormSchema = z.object({
 });
 
 function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
-  const [contentText, setContentText] = useState(task.content);
+  const [contentText, setContentText] = useState(task.taskContent);
 
   // create toast variable
   const { toast } = useToast();
@@ -65,21 +65,36 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
   // ? Consider using "useCallback" instead of useEffect if `updateTask` is a function that changes frequently, it could lead to unnecessary renders. "useCallback" will prevent change on every render and ensure `updateTask` has a stable identity across renders, not triggering unncesary effects or renders.
   useEffect(() => {
     updateTask(task.id, contentText);
-    console.log(`contentText: ${contentText}`);
-    console.log(`contentText: ${contentText}`);
+    // console.log(`\n\ttask.id: ${task.id}`);
+
+    console.log(
+      `Another way to view 'contentText': ${JSON.stringify(
+        contentText,
+        null,
+        2,
+      )}`,
+    );
+    // console.log(`\n\tcontentText: ${contentText}`);
+    console.log(`\t Just lonely task: ${JSON.stringify(task, null, 2)}`);
+    // console.log(`\n\tupdateTask: ${updateTask}`);
+    // console.log(`\n\tdata.contentText: ${data.contentText}`);
+    // console.log(
+    //   `data.contentText.textContent: ${data.contentText.textContent}`,
+    // );
   }, [contentText, task.id]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      {/* <DialogTrigger>{task.content}</DialogTrigger> */}
+      {/* <DialogTrigger>{task.taskContent}</DialogTrigger> */}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>DialogTitle: Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            {/* This should be just the TaskCard's Title */}
-            {/* THis is a duplicate */}
-            DialogDescription: {task.content}
-          </DialogDescription>
+          <DialogTitle className="taskcard-label text-gray-500">
+            <div className="flex gap-64">
+              <div>Create issue</div>
+              <div>{task.taskName}</div>
+            </div>
+          </DialogTitle>
+          <DialogDescription></DialogDescription>
 
           <Form {...form}>
             <form
@@ -91,18 +106,17 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
                 name="textContent"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>FormLabel: Text Context</FormLabel>
+                    <FormLabel className="taskcard-label text-gray-500">
+                      Description
+                    </FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Enter Task Description Here"
-                        className="the-main-text-area resize-none text-gray-900"
+                        className="description text-purple-500"
+                        placeholder="Enter task description here"
                         {...field}
                       />
                     </FormControl>
-                    {/* <FormDescription>
-                      FormDescription: This is <span>FormDescription</span>{" "}
-                      Placeholder Text.
-                    </FormDescription> */}
+                    <FormDescription>ffff{task.taskName}</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -112,8 +126,6 @@ function DialogModal({ task, deleteTask, updateTask, isOpen, onClose }) {
           </Form>
 
           <DialogDescription>
-            {/* This should be  */}
-            {/* THis is a duplicate */}
             Dialog Description: {contentText}
           </DialogDescription>
           {/* Enable Toast button in form for testing */}
@@ -148,7 +160,7 @@ export default DialogModal;
 DialogModal.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    content: PropTypes.string.isRequired,
+    taskContent: PropTypes.string.isRequired,
   }),
   deleteTask: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
