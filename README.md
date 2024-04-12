@@ -6,13 +6,13 @@ Go to: [Project Board](https://nextjs-projects-management.vercel.app/Board) to s
 
 ## Getting Started
 
-To run this project locally, first run the development server:
+To run locally, start the development server:
 
 ```bash
 npm run dev
 ```
 
-##### Go to [http://localhost:3000](http://localhost:3000)
+Go to [http://localhost:3000](http://localhost:3000)
 
 ---
 
