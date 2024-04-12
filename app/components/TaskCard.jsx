@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TrashIcon from "@/app/Icons/TrashIcon";
@@ -7,6 +7,15 @@ import PropTypes from "prop-types";
 function TaskCard({ task, deleteTask, updateTask }) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+  // TaskCard Focus State
+  const [textareaValue, setTextareaValue] = useState(task.content);
+  const [isInitialFocus, setIsInitialFocus] = useState(true);
+
+  // Update textareaValue when task.content changes
+  useEffect(() => {
+    setTextareaValue(task.content);
+  }, [task.content]);
 
   // Make tasks sortable
   const {
@@ -58,16 +67,35 @@ function TaskCard({ task, deleteTask, updateTask }) {
       >
         <textarea
           className="h-[90%] w-full resize-none rounded border-none bg-transparent text-white focus:outline-none"
-          value={task.content}
+          value={isInitialFocus ? "" : textareaValue}
           autoFocus
-          placeholder="Task content here. Press Shift+Enter to Submit"
-          onBlur={toggleEditMode}
+          placeholder="Task content here. Press Shift + Enter to Submit"
+          onFocus={(e) => {
+            if (isInitialFocus) {
+              setTextareaValue("");
+              setIsInitialFocus(false);
+            } else {
+              e.target.select(); // Select all text
+            }
+          }}
+          onBlur={(e) => {
+            if (e.target.value !== "") {
+              updateTask(task.id, e.target.value);
+            }
+            toggleEditMode();
+          }}
+          onClick={(e) => {
+            e.target.select(); // Select text on click
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
+              if (e.target.value !== "") {
+                updateTask(task.id, e.target.value);
+              }
               toggleEditMode();
             }
           }}
-          onChange={(e) => updateTask(task.id, e.target.value)}
+          onChange={(e) => setTextareaValue(e.target.value)}
         />
       </div>
     );
