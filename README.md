@@ -2,6 +2,8 @@
 
 Visit: [nextjs-projects-management](https://nextjs-projects-management.vercel.app/)
 
+Go to: [Project Board](https://nextjs-projects-management.vercel.app/Board) to see Task Card Board
+
 ## Getting Started
 
 To run this project locally, first run the development server:
