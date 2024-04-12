@@ -9,8 +9,8 @@ import { authMiddleware } from "@clerk/nextjs";
 
 // * Default: Empty array => all routes require Login
 // export default authMiddleware({});
-// * Routes: '/' and 'Public' do not require Login like this
-export default authMiddleware({ publicRoutes: ["/", "/Public"] });
+// * Routes: "/", "Public", and now "/Board" do not require Login like this
+export default authMiddleware({ publicRoutes: ["/", "/Public", "/Board"] });
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
