@@ -19,7 +19,7 @@ function TaskCard({ task, deleteTask, updateTask }) {
     transition,
     isDragging,
   } = useSortable({
-    // ? See what happens if you get rid of these New destructured props like key, taskSummary, taskType, taskStatus, etc.
+    // ? See what happens if you get rid of these New destructured props like key, taskSummary, taskType, taskStatus, etc. One second though. maybe I don't need these extra props. This is just for sortable?
     key: task.id, // ! .........
     id: task.id,
     taskSummary: task.taskSummary, // ! .........

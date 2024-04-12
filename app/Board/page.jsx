@@ -61,11 +61,9 @@ const Board = () => {
   const [projectName, setProjectName] = useState("NPM");
   const [taskName, setTaskName] = useState(0);
   const [taskSummary, setTaskSummary] = useState("Default Task Summary");
-  const [taskType, sendTaskType] = useState("Bug");
+  const [taskType, setTaskType] = useState("Story");
   const [taskStatus, setTasketStatus] = useState("To Do");
-  const [taskDescription, setTaskDescription] = useState(
-    "Default Task Description",
-  );
+  const [taskDescription, setTaskDescription] = useState("Task");
   const [taskStoryPoints, setTaskStoryPoints] = useState(0);
   // ! ........................
 
@@ -99,6 +97,7 @@ const Board = () => {
   // $#$$#$$#$$#$$#$$#$$#$$#$$#$$# useEffect(() => {}) #$$#$$#$$#$$#$$#$$#$$#$$#$  //
 
   // *#**#**#**#**#**#**#**#**#**# TASK #**#**#**#**#**#**#**#**#*  //
+  // ! Notice we have newly setup all of these properties for the task in createTask() but we are not doing anything with them yet. Specifically in updateTask() we are only updating taskContent.
   function createTask(columnId) {
     const currentTaskKey = taskKey + 1;
     setTaskKey(currentTaskKey);
@@ -117,6 +116,7 @@ const Board = () => {
     setTasks([...tasks, newTask]);
   }
 
+  // ! `taskContent` is only one single prop! We need this function to do more with every prop it could receive!!
   function updateTask(id, taskContent) {
     const newTasks = tasks.map((task) => {
       // If task.id is not the task we want return original task
@@ -126,7 +126,7 @@ const Board = () => {
       return { ...task, taskContent };
     });
     setTasks(newTasks);
-    // console.log(`Updated Tasks: ${JSON.stringify(newTasks, null, 2)}`);
+    console.log(`Updated Tasks: ${JSON.stringify(newTasks, null, 2)}`);
   }
 
   function deleteTask(id) {
