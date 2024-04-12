@@ -33,6 +33,9 @@ npm run dev
 - [x] Implement Drag-and-Drop for tasks (dnd-kit)
 - [x] Add the rest of the columns working with DND-Kit
 - [x] Fix styling for Column/Cards
+- [x] Show placeholder text on initial TaskCard focus
+- [x] Show updated `task.content` on subsequent TaskCard focus
+- [ ] Fix issue of dragging text updated card to new column, placeholder text is showing instead of `task.content`
 - [ ] Add Jest and React Testing Library for testing
 - [ ] Global State Management:Redux, React Context, Zustand?
 - [ ] Set/Get Card data from database
