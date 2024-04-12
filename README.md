@@ -12,4 +12,6 @@ npm run dev
 
 ##### Go to [http://localhost:3000](http://localhost:3000)
 
-##### (_See Repo's Wiki for Todo, Bugs, Notes and Suggested Usages_)
+---
+
+_See Repo's Wiki for Todo, Bugs, Notes and Suggested Usages_
