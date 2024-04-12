@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TrashIcon from "@/app/Icons/TrashIcon";
@@ -7,6 +7,25 @@ import PropTypes from "prop-types";
 function TaskCard({ task, deleteTask, updateTask }) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [textareaValue, setTextareaValue] = useState(task.content);
+  const [isInitialFocus, setIsInitialFocus] = useState(true);
+
+  // Update textareaValue when task.content changes
+  useEffect(() => {
+    setTextareaValue(task.content);
+  }, [task.content]);
+
+  const toggleEditMode = () => {
+    setEditMode((prev) => !prev);
+    setMouseIsOver(false);
+  };
+
+  const handleUpdateTask = (e) => {
+    if (e.target.value !== "") {
+      updateTask(task.id, e.target.value);
+    }
+    toggleEditMode();
+  };
 
   // Make tasks sortable
   const {
@@ -28,11 +47,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
   const style = {
     transition,
     transform: CSS.Translate.toString(transform),
-  };
-
-  const toggleEditMode = () => {
-    setEditMode((prev) => !prev);
-    setMouseIsOver(false);
   };
 
   // Returns TaskCard slot where being dragged from, then dragged to
@@ -58,22 +72,30 @@ function TaskCard({ task, deleteTask, updateTask }) {
       >
         <textarea
           className="h-[90%] w-full resize-none rounded border-none bg-transparent text-white focus:outline-none"
-          value={task.content}
+          value={isInitialFocus ? "" : textareaValue}
           autoFocus
-          placeholder="Task content here. Press Shift+Enter to Submit"
-          onBlur={toggleEditMode}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && e.shiftKey) {
-              toggleEditMode();
+          placeholder="Task content here. Press Shift + Enter to Submit"
+          onFocus={(e) => {
+            if (isInitialFocus) {
+              setTextareaValue("");
+              setIsInitialFocus(false);
+            } else {
+              e.target.select(); // Select all text
             }
           }}
-          onChange={(e) => updateTask(task.id, e.target.value)}
+          onBlur={handleUpdateTask}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && e.shiftKey) {
+              handleUpdateTask(e);
+            }
+          }}
+          onChange={(e) => setTextareaValue(e.target.value)}
         />
       </div>
     );
   }
 
-  // This is returned when NOT IN EDIT MODE (Standard)
+  // This is returned when not in editMode (Standard)
   return (
     <div
       className="task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-red-800 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
