@@ -44,6 +44,13 @@ function TaskCard({ task, deleteTask, updateTask }) {
     setMouseIsOver(false);
   };
 
+  const handleUpdateTask = (e) => {
+    if (e.target.value !== "") {
+      updateTask(task.id, e.target.value);
+    }
+    toggleEditMode();
+  };
+
   // Returns TaskCard slot where being dragged from, then dragged to
   if (isDragging) {
     return (
@@ -78,21 +85,10 @@ function TaskCard({ task, deleteTask, updateTask }) {
               e.target.select(); // Select all text
             }
           }}
-          onBlur={(e) => {
-            if (e.target.value !== "") {
-              updateTask(task.id, e.target.value);
-            }
-            toggleEditMode();
-          }}
-          onClick={(e) => {
-            e.target.select(); // Select text on click
-          }}
+          onBlur={handleUpdateTask}
           onKeyDown={(e) => {
             if (e.key === "Enter" && e.shiftKey) {
-              if (e.target.value !== "") {
-                updateTask(task.id, e.target.value);
-              }
-              toggleEditMode();
+              handleUpdateTask(e);
             }
           }}
           onChange={(e) => setTextareaValue(e.target.value)}
@@ -101,7 +97,7 @@ function TaskCard({ task, deleteTask, updateTask }) {
     );
   }
 
-  // This is returned when NOT IN EDIT MODE (Standard)
+  // This is returned when not in editMode (Standard)
   return (
     <div
       className="task relative flex h-[100px] min-h-[100px] cursor-grab items-center rounded-xl bg-red-800 p-2.5 text-left hover:ring-2 hover:ring-inset hover:ring-rose-500"
