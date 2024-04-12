@@ -7,8 +7,6 @@ import PropTypes from "prop-types";
 function TaskCard({ task, deleteTask, updateTask }) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
-
-  // TaskCard Focus State
   const [textareaValue, setTextareaValue] = useState(task.content);
   const [isInitialFocus, setIsInitialFocus] = useState(true);
 
@@ -16,6 +14,18 @@ function TaskCard({ task, deleteTask, updateTask }) {
   useEffect(() => {
     setTextareaValue(task.content);
   }, [task.content]);
+
+  const toggleEditMode = () => {
+    setEditMode((prev) => !prev);
+    setMouseIsOver(false);
+  };
+
+  const handleUpdateTask = (e) => {
+    if (e.target.value !== "") {
+      updateTask(task.id, e.target.value);
+    }
+    toggleEditMode();
+  };
 
   // Make tasks sortable
   const {
@@ -37,18 +47,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
   const style = {
     transition,
     transform: CSS.Translate.toString(transform),
-  };
-
-  const toggleEditMode = () => {
-    setEditMode((prev) => !prev);
-    setMouseIsOver(false);
-  };
-
-  const handleUpdateTask = (e) => {
-    if (e.target.value !== "") {
-      updateTask(task.id, e.target.value);
-    }
-    toggleEditMode();
   };
 
   // Returns TaskCard slot where being dragged from, then dragged to
