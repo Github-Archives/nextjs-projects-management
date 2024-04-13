@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model playing_with_database {
+model playing_with_neon {
   id    Int    @id @default(autoincrement())
   name  String
   value String
