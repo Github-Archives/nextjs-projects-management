@@ -1,3 +1,12 @@
+// Ran the following
+// npx prisma
+// npx prisma init
+//     .... create basic schema here that matches Neon table schema
+// npx prisma db pull
+// npx prisma generate
+// npx prisma studio
+
+
 generator client {
   provider = "prisma-client-js"
 }
